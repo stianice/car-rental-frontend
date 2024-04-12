@@ -78,7 +78,6 @@
 <script>
 import CarCard from './CarCard.vue';
 import { Api } from '@/Api'
-import { message } from 'ant-design-vue';
 export default {
     components: {
         CarCard,

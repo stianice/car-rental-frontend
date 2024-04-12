@@ -62,7 +62,7 @@ import PostCar from '../components/PostCar.vue'
 import ManageCars from '../components/ManageCars.vue'
 import { logout } from '@/utils/auth'
 import { Api } from '@/Api'
-import { message } from 'ant-design-vue';
+
 export default {
     components: {
         ManagerInform,
@@ -95,7 +95,7 @@ export default {
                     console.log(response.data);
                     this.$router.push('/manager');
                 }).catch(error => {
-                    message .error('Failed to delete all cars.');
+                  
                     console.error('Error:', error);
                 });
             }

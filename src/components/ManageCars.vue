@@ -125,7 +125,7 @@
 <script>
 import { getToken, decodeToken } from '../utils/auth'
 import { Api } from '@/Api'
-import { message } from 'ant-design-vue';
+
 
 export default {
     components: {},
@@ -159,7 +159,7 @@ export default {
 
 
             }).catch((error) => {
-                    message.error(error.response.data.message)
+                  
                     this.reslultMessage=error.response.data.message
                     console.error('Error:', error)
                 })
@@ -175,11 +175,11 @@ export default {
         updateCar() {
             Api.put(`/cars/${this.updateCarRegistration}`, this.updateCarData)
                 .then(() => {
-                    message.error('Information of car update successfully!')
+                  
                     this.isUpdateCar = false
                 })
                 .catch((error) => {
-                    message.error('Information of car update failed. You must modify all fields.')
+                  
                     console.error('Error:', error)
                 })
         },
@@ -196,7 +196,7 @@ export default {
                         this.displayCars()
                     })
                     .catch((error) => {
-                        message.error('Failed to delete car.')
+                     
                         console.error('Error:', error)
                     })
             }

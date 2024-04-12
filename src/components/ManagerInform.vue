@@ -72,7 +72,7 @@
 <script>
 import { Api } from '@/Api'
 import { getToken, decodeToken } from '../utils/auth'
-import { message } from 'ant-design-vue';
+
 const token = getToken();
 
 const managerEmail = (token) ? decodeToken(token).managerEmail : 'logged_out';
@@ -95,9 +95,9 @@ export default {
             const managerDataWithoutPassword = { ...this.manager };
             delete managerDataWithoutPassword.password;
             Api.patch(`/managers/${managerEmail}`, managerDataWithoutPassword).then(() => {
-                message .error('Information update successfully!');
+             
             }).catch(error => {
-                message .error('Information update failed!');
+          
                 console.error('Error:', error);
             });
         },

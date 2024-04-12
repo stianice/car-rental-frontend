@@ -35,7 +35,7 @@
 <script>
 import { decodeToken, getToken } from '../utils/auth'
 import { Api } from '@/Api';
-import { message } from 'ant-design-vue';
+
 const token = getToken();
 const userEmail = (token) ? decodeToken(token).userEmail : 'logged_out';
 
@@ -87,7 +87,7 @@ export default {
 
         } catch (err) {
             console.log(err);
-            message.error('信息加载失败，请重试。');
+          
         }
 
     },
@@ -118,26 +118,13 @@ export default {
 
             } catch (error) {
                 console.error('创建订单失败:', error);
-                message.error('创建订单失败, 请重试.');
+              
                 // this.$router.push('/');
             }
 
 
 
-            // Handle payment with Stripe
-            // try {
-            //     console.log(this.$store.state.finalBooking)
-            //     const response = await Api
-            //         .post('/create-checkout-session', { 
-            //             "bookingRef": this.$store.state.finalBooking.bookingReference,
-            //             "bookingInfo": this.bookingInfo,
-            //             "car": this.carInfo 
-            //         });
-            //     window.location.href = response.data.url;
-            // } catch (err) {
-            //     console.error(err);
-            //     message.error('创建订单失败, 请重试');
-            // }
+           
         },
     }
 }

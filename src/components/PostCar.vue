@@ -97,7 +97,7 @@
 
 <script>
 import { Api } from '@/Api';
-import { message } from 'ant-design-vue';;
+
 import { decodeToken, getToken } from '../utils/auth';
 
 
@@ -140,10 +140,10 @@ export default {
             };
             const url = `/managers/${this.managerEmail}/cars`;
             Api.post(url, car).then((response) => {
-                message .error('车辆添加成功!');
+             
                 console.log(response.data.data);
             }).catch(error => {
-                message .error('车辆添加失败，请重新提交!');
+               
                 console.error('Error:', error);
             });
         },

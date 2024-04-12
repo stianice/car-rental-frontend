@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Router from '../router'
-import { message } from 'ant-design-vue';
+
 const API_BASE_URL = import.meta.env.VITE_APP_API_ENDPOINT || 'http://localhost:3000/api/v1';
 
 export const getToken = () => {
@@ -28,7 +28,7 @@ export const register = async (userData) => {
         
     } catch (err) {
         console.log(err);
-        message .error('This email has already been registered. Please select another email.');
+       
     }
 }
 
@@ -55,7 +55,7 @@ export const login = async (email, password, userType) => {
     } catch (err) {
       
        
-        message .error('登录失败,请检查用户名和密码.');
+      
     }
 }
 

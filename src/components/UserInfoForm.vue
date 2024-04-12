@@ -86,7 +86,7 @@
 <script>
 import { getToken, decodeToken } from '../utils/auth'
 import { Api } from '@/Api'
-import { message } from 'ant-design-vue';
+
 const token = getToken()
 
 const userEmail = token ? decodeToken(token).userEmail : 'logged_out'
@@ -122,10 +122,10 @@ export default {
     //   delete userDataWithoutPassword.password
       Api.patch(`/users/${userEmail}`, this.user)
         .then(() => {
-          message .error('信息更新成功!')
+        
         })
         .catch((error) => {
-          message .error('信息更新失败!')
+       
           console.error('Error:', error)
         })
     }
