@@ -65,10 +65,12 @@ function onClickMenuItem(path) {
 
 
 onMounted(() => {
+
   
+
   Api.get('/menus')
     .then((response) => {
-     menus.value = response.data.data
+     menus.value = response.data
 
       console.log()
     })

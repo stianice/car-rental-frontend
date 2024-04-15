@@ -86,7 +86,7 @@ export default {
     mounted() {
 
         Api.get(`/managers/${managerEmail}`).then((response) => {
-            this.manager = response.data.data;
+            this.manager = response.data;
         });
     },
 

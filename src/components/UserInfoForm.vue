@@ -65,8 +65,7 @@
             </div>
             <div class="col-12">
               <label for="address" class="form-label fs-5">城市:&nbsp;</label>
-              <span style="font-size: 18px;">   {{ user.city }}</span>
-              
+              <span style="font-size: 18px"> {{ user.city }}</span>
             </div>
           </div>
         </form>
@@ -83,52 +82,41 @@
   </main>
 </template>
 
-<script>
+<script setup>
 import { getToken, decodeToken } from '../utils/auth'
 import { Api } from '@/Api'
-
+import { onMounted, ref } from 'vue'
 const token = getToken()
 
 const userEmail = token ? decodeToken(token).userEmail : 'logged_out'
+const user = ref({})
 
-export default {
-  data() {
-    return {
-      user: {}
-    }
-  },
-  mounted() {
-    Api.get(`/users/${userEmail}`).then((response) => {
-      this.user = response.data.data.user;
-    })
+onMounted (() => {
+  Api.get(`/users/${userEmail}`).then((response) => {
+    user.value = response.data.user
+  })
 
-    // Populate form fields with saved data when navigating back
-    if (this.$store.state.userInfo) {
-      this.userInfoData = { ...this.$store.state.userInfo }
-    }
-  },
-
-  methods: {
-    nextStep() {
-      // Submit user info data to Vuex store
-      this.$store.commit('setUserInfo', this.userInfoData)
-
-      // Navigate to the next step
-      this.$router.push('/booking/payment')
-    },
-
-    updateInformation() {
-    //   const userDataWithoutPassword = { ...this.user }
-    //   delete userDataWithoutPassword.password
-      Api.patch(`/users/${userEmail}`, this.user)
-        .then(() => {
-        
-        })
-        .catch((error) => {
-       
-          console.error('Error:', error)
-        })
-    }
+  // Populate form fields with saved data when navigating back
+  if (this.$store.state.userInfo) {
+    this.userInfoData = { ...this.$store.state.userInfo }
   }
+})
+
+nextStep = () => {
+  // Submit user info data to Vuex store
+  this.$store.commit('setUserInfo', this.userInfoData)
+
+  // Navigate to the next step
+  this.$router.push('/booking/payment')
+}
+
+const updateInformation = () => {
+  //   const userDataWithoutPassword = { ...this.user }
+  //   delete userDataWithoutPassword.password
+  Api.patch(`/users/${userEmail}`, this.user)
+    .then(() => {})
+    .catch((error) => {
+      console.error('Error:', error)
+    })
 }
 </script>

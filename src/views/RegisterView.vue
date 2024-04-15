@@ -12,16 +12,11 @@
 }
 </style>
 
-<script>
+<script setup>
 
     import NavBar from '@/components/NavBar.vue';
     import Register from '@/components/Register.vue';
     
-    export default {
-        components: {
-            NavBar,
-            Register
-        },
-    };
+   
 </script>
 

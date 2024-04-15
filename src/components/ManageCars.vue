@@ -151,7 +151,7 @@ export default {
             const manager = token ? decodeToken(token) : 'logged_out'
             Api.get(`/managers/${manager.managerEmail}/cars`).then((resp) => {
 
-                this.cars = resp.data.data;
+                this.cars = resp.data;
                
                 if (this.cars.length > 0) {
                     this.showNoResultsMessage = false

@@ -24,12 +24,12 @@ Api.interceptors.request.use(
 
 Api.interceptors.response.use((res) => {
 
-    return res;
+    return res.data;
 }),
-  (err) => {
+  err => {
     if (err.response.state == 401) {
       sessionStorage.clear();
     } 
-    
-    return err.response;
+   
+    return Promise.reject(err);
   }

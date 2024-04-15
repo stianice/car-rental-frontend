@@ -12,14 +12,9 @@
 }
 </style>
 
-<script>
+<script setup>
 import NavBar from '@/components/NavBar.vue';
 import LogIn from '@/components/LogIn.vue';
 
-export default {
-    components: {
-        NavBar,
-        LogIn
-    },
-};
+
 </script>

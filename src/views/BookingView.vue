@@ -11,15 +11,10 @@
 }
 </style>
 
-<script>
+<script setup>
     import NavBar from '@/components/NavBar.vue';
     import { RouterView } from 'vue-router'
 
-    export default {
-        components: {
-            RouterView,
-            NavBar
-        },
-    };
+   
 </script>
 

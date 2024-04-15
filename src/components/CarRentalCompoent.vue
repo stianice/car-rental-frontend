@@ -78,17 +78,12 @@
         v-model:selectedKeys="selectedKeys"
         :pagination="pagination"
       >
-
-      <template #stu="{ record }">
-        <span style="color: red;" v-if="record.status=='未出租'">未出租</span>
-        <span style="color: blue;" v-else>已出租</span>
-      </template>
+        <template #stu="{ record }">
+          <span style="color: red" v-if="record.status == '未出租'">未出租</span>
+          <span style="color: blue" v-else>已出租</span>
+        </template>
         <template #img="{ record }">
-          <a-image
-            width="100"
-            hight="60"
-            :src="record.image"
-          />
+          <a-image width="100" hight="60" :src="record.image" />
         </template>
 
         <template #opt="{ record }">
@@ -109,23 +104,17 @@
       </a-table>
     </a-space>
 
-    <a-modal
-      v-model:visible="visible"
-      title="编辑信息"
-      @cancel="handleCancel"
-      @ok="handleBeforeOk"
-    >
+    <a-modal v-model:visible="visible" title="编辑信息" @cancel="handleCancel" @ok="handleBeforeOk">
       <a-form :model="form">
-        <a-form-item field="brand" label="品牌"> <a-input v-model="form.brand" /> </a-form-item
-        >
+        <a-form-item field="brand" label="品牌"> <a-input v-model="form.brand" /> </a-form-item>
         <a-form-item field="registration" label="车牌号">
           <a-input v-model="form.registration" /> </a-form-item
         ><a-form-item field="color" label="颜色"> <a-input v-model="form.color" /> </a-form-item
         ><a-form-item field="carType" label="车型"> <a-input v-model="form.carType" /> </a-form-item
         ><a-form-item field="price" label="租赁价格"> <a-input v-model="form.price" /> </a-form-item
         ><a-form-item field="status" label="出租状态">
-          <a-input v-model="form.status" /> </a-form-item
-        >
+          <a-input v-model="form.status" />
+        </a-form-item>
 
         <a-form-item field="description" label="描述">
           <a-textarea
@@ -142,12 +131,10 @@
             list-type="picture-card"
             image-preview
             :limit="1"
-            :custom-request="customRequestUpdate" 
-            :file-list="[{url:form.image}]"
+            :custom-request="customRequestUpdate"
+            :file-list="[{ url: form.image }]"
           >
           </a-upload>
-
-
         </a-form-item>
       </a-form>
     </a-modal>
@@ -164,14 +151,16 @@
         </a-form-item>
         <a-form-item field="registration" label="车牌号">
           <a-input v-model="AddCarForm.registration" /> </a-form-item
-        ><a-form-item field="color" label="颜色"> <a-input v-model="AddCarForm.color" /> </a-form-item
+        ><a-form-item field="color" label="颜色">
+          <a-input v-model="AddCarForm.color" /> </a-form-item
         ><a-form-item field="carType" label="车型">
           <a-input v-model="AddCarForm.carType" /> </a-form-item
-        ><a-form-item field="price" label="出租价格"> <a-input v-model="AddCarForm.price" /> </a-form-item>
+        ><a-form-item field="price" label="出租价格">
+          <a-input v-model="AddCarForm.price" />
+        </a-form-item>
         <a-form-item field="status" label="出租状态">
-          <a-input v-model="AddCarForm.status" type="text" /> </a-form-item
-        >
-
+          <a-input v-model="AddCarForm.status" type="text" />
+        </a-form-item>
 
         <a-form-item field="description" label="描述">
           <a-textarea
@@ -188,21 +177,17 @@
             list-type="picture-card"
             image-preview
             :limit="1"
-            :custom-request="customRequestAdd" 
-            :file-list="[{url:AddCarForm.image}]"
+            :custom-request="customRequestAdd"
+            :file-list="[{ url: AddCarForm.image }]"
           >
           </a-upload>
-
-          </a-form-item>
-         
-
-
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
 </template>
 <script setup>
-import { onMounted, ref,reactive } from 'vue'
+import { onMounted, ref, reactive } from 'vue'
 import {
   IconPlusCircle,
   IconMinusCircle,
@@ -221,89 +206,81 @@ const searchForm = ref({
   description: ''
 })
 
+const customRequestUpdate = (option) => {
+  const { onProgress, onError, onSuccess, fileItem, name } = option
 
+  const formData = new FormData()
+  formData.append(name || 'file', fileItem.file)
 
-const customRequestUpdate=(option)=>{
-  const {onProgress, onError, onSuccess, fileItem, name} = option
-    
-
-      const formData = new FormData();
-      formData.append(name || 'file', fileItem.file);
-    
-
-      const CancelToken = axios.CancelToken; 
-      const source = CancelToken.source();  
-       Api.post('/uploadimage',formData, {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-              onUploadProgress: (progressEvent) => {
-                if(progressEvent.lengthComputable){
-                  var percent =
-                  (( (progressEvent.loaded / progressEvent.total) * 100) | 0);
-                  onProgress(percent,progressEvent)
-                }
-              },
-
-              cancelToken: source.token 
-            }).then(res=>{
-              onSuccess(res.data)
-              console.log(fileItem.response) 
-              form.value.image=res.data
-
-              Message.success(res.message) 
-       
-             
-            }).catch(erro=>{
-              Message.error(erro.response.message)
-              onError(erro.response.message)
-            })
-      return {
-        abort() {
-          source.cancel("停止上传")
-        }
+  const CancelToken = axios.CancelToken
+  const source = CancelToken.source()
+  Api.post('/uploadimage', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    onUploadProgress: (progressEvent) => {
+      if (progressEvent.lengthComputable) {
+        var percent = ((progressEvent.loaded / progressEvent.total) * 100) | 0
+        onProgress(percent, progressEvent)
       }
+    },
+
+    cancelToken: source.token
+  })
+    .then((res) => {
+      onSuccess(res.data)
+      console.log(fileItem.response)
+      form.value.image = res.data
+
+      Message.success(res.message)
+    })
+    .catch((erro) => {
+      Message.error(erro.response.message)
+      onError(erro.response.message)
+    })
+  return {
+    abort() {
+      source.cancel('停止上传')
+    }
+  }
 }
-const customRequestAdd=(option)=>{
-  const {onProgress, onError, onSuccess, fileItem, name} = option
-    
+const customRequestAdd = (option) => {
+  const { onProgress, onError, onSuccess, fileItem, name } = option
 
-      const formData = new FormData();
-      formData.append(name || 'file', fileItem.file);
-    
+  const formData = new FormData()
+  formData.append(name || 'file', fileItem.file)
 
-      const CancelToken = axios.CancelToken; 
-      const source = CancelToken.source();  
-       Api.post('/uploadimage',formData, {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-              onUploadProgress: (progressEvent) => {
-                if(progressEvent.lengthComputable){
-                  var percent =
-                  (( (progressEvent.loaded / progressEvent.total) * 100) | 0);
-                  onProgress(percent,progressEvent)
-                }
-              },
-
-              cancelToken: source.token 
-            }).then(res=>{
-              onSuccess(res.data)
-              console.log(fileItem.response) 
-              AddCarForm.value.image=res.data
-
-              Message.success(res.message) 
-       
-             
-            }).catch(erro=>{
-              Message.error(erro.response.message)
-              onError(erro.response.message)
-            })
-      return {
-        abort() {
-          source.cancel("停止上传")
-        }
+  const CancelToken = axios.CancelToken
+  const source = CancelToken.source()
+  Api.post('/uploadimage', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    onUploadProgress: (progressEvent) => {
+      if (progressEvent.lengthComputable) {
+        var percent = ((progressEvent.loaded / progressEvent.total) * 100) | 0
+        onProgress(percent, progressEvent)
       }
+    },
+
+    cancelToken: source.token
+  })
+    .then((res) => {
+      onSuccess(res.data)
+      console.log(fileItem.response)
+      AddCarForm.value.image = res.data
+
+      Message.success(res.message)
+    })
+    .catch((erro) => {
+      Message.error(erro.response.message)
+      onError(erro.response.message)
+    })
+  return {
+    abort() {
+      source.cancel('停止上传')
+    }
+  }
 }
 
 const selectedKeys = ref([])
@@ -316,14 +293,13 @@ const rowSelection = ref({
 
 const pagination = { pageSize: 6 }
 
-
-
 // 列表行
 const columns = [
   {
     title: '车牌号',
     dataIndex: 'registration'
-  }, {
+  },
+  {
     title: '品牌',
     dataIndex: 'brand'
   },
@@ -334,7 +310,8 @@ const columns = [
   {
     title: '颜色',
     dataIndex: 'color'
-  }, {
+  },
+  {
     title: '描述',
     dataIndex: 'description'
   },
@@ -351,10 +328,10 @@ const columns = [
     title: '缩略图',
     dataIndex: 'image',
     slotName: 'img'
-  },{
+  },
+  {
     title: '创建时间',
-    dataIndex: 'createDate',
-   
+    dataIndex: 'createDate'
   },
   {
     title: '操作',
@@ -365,7 +342,6 @@ const columns = [
 ]
 
 //上传
-
 
 // 列表数据
 const data = ref([])
@@ -416,7 +392,7 @@ const form = ref({
   status: '',
   price: '',
   image: '',
-  description: '' ,
+  description: '',
   carType: ''
 })
 
@@ -436,13 +412,12 @@ const handleClick = (record) => {
 const deleteItem = ref({ userId: '', email: '' })
 // 更新信息请求
 const handleBeforeOk = () => {
-  
   console.log(form.value)
   //编辑信息提交
   Api.put('/cars/' + form.value.registration, form.value).then((res) => {
     visible.value = false
     getAllCars()
-    message.success('数据编辑成功')
+    Message.success('数据编辑成功')
   })
 }
 
@@ -476,14 +451,13 @@ const AddCarForm = ref({
   status: '',
   price: '',
   image: '',
-  description: '' ,
+  description: '',
   carType: ''
 })
 const visibleAddCar = ref(false)
 
 const handleCancelCar = () => {
   visibleAddCar.value = false
- 
 }
 
 const addCarClick = () => {

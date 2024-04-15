@@ -12,11 +12,11 @@
         </div>
 
         <div class="modal-body p-5 pt-0">
-          <form class="" @submit.prevent="register">
+          <form >
             <div class="form-floating mb-3">
               <input
                 type="email"
-                v-model="email"
+                v-model="userData.email"
                 class="form-control rounded-3"
                 id="floatingInput"
                 placeholder="name@example.com"
@@ -27,7 +27,7 @@
             <div class="form-floating mb-3">
               <input
                 type="password"
-                v-model="password"
+                v-model="userData.password"
                 class="form-control rounded-3"
                 id="floatingPassword"
                 placeholder="Password"
@@ -47,7 +47,7 @@
             <div class="form-floating mb-3">
               <input
                 type="text"
-                v-model="identity"
+                v-model="userData.identity"
                 class="form-control rounded-3"
                 id="floatingInput"
                 placeholder="身份证号"
@@ -57,7 +57,7 @@
             <div class="form-floating mb-3">
               <input
                 type="text"
-                v-model="city"
+                v-model="userData.city"
                 class="form-control rounded-3"
                 id="floatingInput"
                 placeholder="城市"
@@ -65,29 +65,26 @@
               <label for="floatingInput">城市</label>
             </div>
 
-            <div class="form-floating mb-3">
-              <input
-                type="text"
-                v-model="sex"
-                class="form-control rounded-3"
-                id="floatingInput"
-                placeholder="性别"
-              />
-              <label for="floatingInput">性别</label>
-            </div>
+        
 
             <div class="form-floating mb-3">
               <input
                 type="num"
-                v-model="phoneNumber"
+                v-model="userData.phoneNumber"
                 class="form-control rounded-3"
                 id="floatingInput"
                 placeholder="手机号"
               />
               <label for="floatingInput">手机</label>
             </div>
+            <div class="form-floating mb-3">
+              <a-radio-group v-model="userData.sex">
+      <a-radio value="男">男</a-radio>
+      <a-radio value="女">女</a-radio>
+    </a-radio-group>
+            </div>
 
-            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">注 册</button>
+            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" @click="registerAsync">注 册</button>
             <small class="text-body-secondary">点击注册表示您同意使用条款。</small>
             <hr class="my-4" />
             <h2 class="fs-5 fw-normal mb-3">已经有一个帐户？</h2>
@@ -107,39 +104,30 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { register } from '../utils/auth'
+import { ref } from 'vue'
 
-export default {
-  data() {
-    return {
-      email: '',
-      name: '',
-      identity: '',
-      password: '',
-      phoneNumber: '',
-      city:'',
-      sex:'',
-    }
-  },
-  methods: {
-    redirectToLogin() {
-      // use router.push Navigate to the login page
-      this.$router.push('/login')
-    },
-    register() {
-      const userData = {
-        email: this.email,
-        name: this.name,
-        identity: this.identity,
-        password: this.password,
-        phoneNumber: this.phoneNumber,
-        city: this.city,
-        sex: '1'
-      }
 
-      register(userData)
-    }
-  }
+
+const userData = ref({
+  email: '',
+  name: '',
+  identity: '',
+  password: '',
+  phoneNumber: '',
+  city: '',
+  sex: ''
+})
+
+const redirectToLogin = () => {
+  // use router.push Navigate to the login page
+  this.$router.push('/login')
+}
+
+const registerAsync = () => {
+
+  register(userData.value)
+
 }
 </script>
