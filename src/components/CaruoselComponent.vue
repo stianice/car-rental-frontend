@@ -28,9 +28,9 @@ import { onMounted, ref } from 'vue'
 
 const images=ref([
 
-'http://localhost:3000/staticfiles/wf3awrmw.chv.png',
-'http://localhost:3000/staticfiles/5crgdmjw.00e.png',
-'http://localhost:3000/staticfiles/5crgdmjw.00e.png'
+'http://localhost:3000/staticfiles/25lqnx2s.w0u.png',
+'http://localhost:3000/staticfiles/rvyyux4j.rvw.png',
+'http://localhost:3000/staticfiles/n3fw21pd.za0.png'
 
 ])
 

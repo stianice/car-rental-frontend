@@ -24,20 +24,25 @@
 </template>
 
 <script setup>
-import store from '../store/index'
+// import store from '../store/index'
+import { useConfirmStore } from '../store/index'
 import router from '../router/index'
-const prop=defineProps({
+const prop = defineProps({
   car: {
     type: Object,
     required: true
   },
   isLastCard: { type: Boolean, required: true }
 })
-
+const store = useConfirmStore()
 const bookCar = () => {
-
   
-  store.commit('setCar', prop.car.registration)
+  console.log(prop.car.registration)
+  console.log(store)
+  store.bookingData.car = prop.car.registration
+
+
+  // store.commit('setCar', prop.car.registration)
 
   router.push('/booking')
 }

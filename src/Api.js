@@ -1,4 +1,3 @@
-
 import { getToken } from './utils/auth'
 import axios from 'axios'
 
@@ -18,18 +17,17 @@ Api.interceptors.request.use(
   },
   (err) => {
     console.error(err)
-    return err
+    return Promise.reject(err)
   }
 )
 
 Api.interceptors.response.use((res) => {
-
-    return res.data;
+  return res.data
 }),
-  err => {
+  (err) => {
     if (err.response.state == 401) {
-      sessionStorage.clear();
-    } 
-   
-    return Promise.reject(err);
+      sessionStorage.clear()
+    }
+
+    return Promise.reject(err)
   }

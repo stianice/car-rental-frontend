@@ -35,7 +35,10 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import store from '../store/index'
+import {useConfirmStore}from '../store/index'
+
+const store = useConfirmStore()
+
 const userInfo = ref({ email: '', name: '', identity: '', phoneNumber: '', carType: '' })
 
 const bookingInfo = ref({ car: '', startDate: '', endDate: '' })
@@ -43,14 +46,14 @@ const bookingInfo = ref({ car: '', startDate: '', endDate: '' })
 const carInfo = ref({})
 
 onMounted(() => {
-  userInfo.value.email = store.state.finalBooking.user.email
-  userInfo.value.name = store.state.finalBooking.user.name
-  userInfo.value.identity = store.state.finalBooking.user.identity
-  userInfo.value.phoneNumber = store.state.finalBooking.user.phoneNumber
-  userInfo.value.carType = store.state.finalBooking.car.carType
-  bookingInfo.value.startDate = store.state.finalBooking.startDate.substring(0, 10)
-  bookingInfo.value.endDate = store.state.finalBooking.endDate.substring(0, 10)
-  carInfo.value = store.state.finalBooking.car
+  userInfo.value.email = store.finalBooking.user.email
+  userInfo.value.name = store.finalBooking.user.name
+  userInfo.value.identity = store.finalBooking.user.identity
+  userInfo.value.phoneNumber = store.finalBooking.user.phoneNumber
+  userInfo.value.carType = store.finalBooking.car.carType
+  bookingInfo.value.startDate = store.finalBooking.startDate.substring(0, 10)
+  bookingInfo.value.endDate = store.finalBooking.endDate.substring(0, 10)
+  carInfo.value = store.finalBooking.car
   localStorage.clear()
 })
 </script>

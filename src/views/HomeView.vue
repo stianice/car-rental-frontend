@@ -11,4 +11,5 @@ import HeroComponent from '../components/HeroComponent.vue'
 
 import NavBar from '../components/NavBar.vue'
 import AboutComponent from '../components/AboutComponent.vue'
+
 </script>

@@ -43,23 +43,23 @@
             <ul class="dropdown-menu dropdown-menu-dark">
               <li><a @click="filterByBrand('All')" class="dropdown-item" href="#fleet">全部</a></li>
               <li>
-                <a @click="filterByBrand('Audi')" class="dropdown-item" href="#fleet">奥迪</a>
+                <a @click="filterByBrand('奥迪')" class="dropdown-item" href="#fleet">奥迪</a>
               </li>
-              <li><a @click="filterByBrand('BMW')" class="dropdown-item" href="#fleet">宝马</a></li>
+              <li><a @click="filterByBrand('宝马')" class="dropdown-item" href="#fleet">宝马</a></li>
               <li>
-                <a @click="filterByBrand('BYD')" class="dropdown-item" href="#fleet">比亚迪</a>
-              </li>
-              <li>
-                <a @click="filterByBrand('BYD')" class="dropdown-item" href="#fleet">梅赛德斯</a>
+                <a @click="filterByBrand('比亚迪')" class="dropdown-item" href="#fleet">比亚迪</a>
               </li>
               <li>
-                <a @click="filterByBrand('Tesla')" class="dropdown-item" href="#fleet">特斯拉</a>
+                <a @click="filterByBrand('梅赛德斯')" class="dropdown-item" href="#fleet">梅赛德斯</a>
               </li>
               <li>
-                <a @click="filterByBrand('Toyota')" class="dropdown-item" href="#fleet">丰田</a>
+                <a @click="filterByBrand('特斯拉')" class="dropdown-item" href="#fleet">特斯拉</a>
               </li>
               <li>
-                <a @click="filterByBrand('Volvo')" class="dropdown-item" href="#fleet">沃尔沃</a>
+                <a @click="filterByBrand('丰田')" class="dropdown-item" href="#fleet">丰田</a>
+              </li>
+              <li>
+                <a @click="filterByBrand('沃尔沃')" class="dropdown-item" href="#fleet">沃尔沃</a>
               </li>
             </ul>
           </li>
@@ -73,26 +73,26 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-dark">
               <li><a @click="filterByColor('All')" class="dropdown-item" href="#fleet">全部</a></li>
-              <li><a @click="filterByColor('Black')" class="dropdown-item" href="#fleet">黑</a></li>
-              <li><a @click="filterByColor('Blue')" class="dropdown-item" href="#fleet">蓝</a></li>
+              <li><a @click="filterByColor('黑')" class="dropdown-item" href="#fleet">黑</a></li>
+              <li><a @click="filterByColor('蓝')" class="dropdown-item" href="#fleet">蓝</a></li>
               <li>
-                <a @click="filterByColor('Grayness')" class="dropdown-item" href="#fleet">灰</a>
+                <a @click="filterByColor('灰')" class="dropdown-item" href="#fleet">灰</a>
               </li>
-              <li><a @click="filterByColor('Green')" class="dropdown-item" href="#fleet">绿</a></li>
-              <li><a @click="filterByColor('Red')" class="dropdown-item" href="#fleet">红</a></li>
-              <li><a @click="filterByColor('White')" class="dropdown-item" href="#fleet">白</a></li>
+              <li><a @click="filterByColor('绿')" class="dropdown-item" href="#fleet">绿</a></li>
+              <li><a @click="filterByColor('红')" class="dropdown-item" href="#fleet">红</a></li>
+              <li><a @click="filterByColor('白')" class="dropdown-item" href="#fleet">白</a></li>
               <li>
-                <a @click="filterByColor('Yellow')" class="dropdown-item" href="#fleet">黄</a>
+                <a @click="filterByColor('黄')" class="dropdown-item" href="#fleet">黄</a>
               </li>
             </ul>
           </li>
-          <a-space direction="vertical" size="large">
+          <!-- <a-space direction="vertical" size="large">
             <a-input-search
               :style="{ width: '200px' }"
               placeholder="请输入车型过滤搜索"
               search-button
             />
-          </a-space>
+          </a-space> -->
           <li class="nav-item"><a class="nav-link" href="#"></a></li>
         </ul>
       </div>

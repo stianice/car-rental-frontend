@@ -1,85 +1,118 @@
 <template>
-  <a-typography-title :heading="4"  style="margin: 0;">查询条件：</a-typography-title>
-  <a-divider />
-  <div>
-    <a-form :model="searchForm">
-      <a-row :gutter="18">
-        <a-col :span="6">
-          <a-form-item field="name" label="客户姓名" label-col-flex="100px">
-            <a-input v-model="searchForm.name" placeholder=" " />
-          </a-form-item>
-        </a-col>
-        <a-col :span="6">
-          <a-form-item field="identity" label="身份证号" label-col-flex="80px">
-            <a-input v-model="searchForm.identity" placeholder=" " />
-          </a-form-item> </a-col
-        ><a-col :span="6">
-          <a-form-item field="email" label="客户邮箱" label-col-flex="80px">
-            <a-input v-model="searchForm.email" placeholder=" " />
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row :gutter="18">
-        <a-col :span="6">
-          <a-form-item field="phoneNumber" label="客户手机" label-col-flex="100px">
-            <a-input v-model="searchForm.phoneNumber" placeholder=" " />
-          </a-form-item>
-        </a-col>
+  <div class="container">
+    <Breadcrumb :items="['基础管理', '客户管理']" />
 
-        <a-col :span="6">
-          <a-form-item field="city" label="客户地址" label-col-flex="80px">
-            <a-input v-model="searchForm.city" placeholder=" " />
-          </a-form-item>
+    <a-card class="general-card" title="查询条件">
+      <a-row>
+        <a-col :flex="1">
+          <a-form
+            :model="formModel"
+            :label-col-props="{ span: 6 }"
+            :wrapper-col-props="{ span: 18 }"
+            label-align="left"
+          >
+            <a-row :gutter="16">
+              <a-col :span="8">
+                <a-form-item field="name" label="客户姓名">
+                  <a-input v-model="searchForm.name" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="identity" label="身份证号">
+                  <a-input v-model="searchForm.identity" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="email" label="客户邮箱">
+                  <a-input v-model="searchForm.email" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="phoneNumber" label="客户手机">
+                  <a-input v-model="searchForm.phoneNumber" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="city" label="客户地址">
+                  <a-input v-model="searchForm.city" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="sex" label="性别">
+                  <a-radio-group dirction="horizon" v-model="searchForm.sex">
+                    <a-radio value="男">男</a-radio>
+                    <a-radio value="女">女</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+              </a-col>
+            </a-row>
+          </a-form>
         </a-col>
-        <a-col :span="3">
-          <a-radio-group dirction="horizon" style="margin-top: 8px" v-model="searchForm.sex">
-            <a-radio value="男">男</a-radio>
-            <a-radio value="女">女</a-radio>
-          </a-radio-group>
-        </a-col>
-        <a-col :span="7" style="margin: 6px 40px">
-          <a-space>
-            <a-button type="primary" size="lager" style="margin-right: 5px" @click="handleSearch"
-              ><icon-search />查询</a-button
-            >
-
-            <a-button type="primary" status="success" size="lager" @click="handleResetSerchForm"
-              ><icon-refresh />重置</a-button
-            >
-
-            <a-button type="primary" status="warning" size="lager"><icon-export />导出</a-button>
+        <a-divider style="height: 84px" direction="vertical" />
+        <a-col :flex="'86px'" style="text-align: right">
+          <a-space direction="vertical" :size="18">
+            <a-button type="primary" @click="handleSearch">
+              <template #icon>
+                <icon-search />
+              </template>
+              查询
+            </a-button>
+            <a-button @click="handleResetSerchForm">
+              <template #icon>
+                <icon-refresh />
+              </template>
+              重置
+            </a-button>
           </a-space>
         </a-col>
       </a-row>
-    </a-form>
-    <a-divider size="0.1px" />
-    <div style="margin-bottom: 5px">
-      <a-button type="primary" status="success" size="mini" shape="round" @click="addUserClick"
-        ><icon-plus-circle />添加</a-button
-      >
-      <a-popconfirm
-        content="你确定要这些记录吗？?"
-        okText="确定删除"
-        cancelText="取消"
-        @ok="batchDelete"
-        type="error"
-        position="right"
-      >
-        <a-button type="primary" status="danger" size="mini" shape="round"
-          ><icon-minus-circle />批量删除</a-button
-        >
-      </a-popconfirm>
-    </div>
-   
-    <a-space direction="vertical" fill>
+      <a-divider style="margin-top: 0" />
+      <a-row style="margin-bottom: 10px">
+        <a-col :span="16">
+          <a-space>
+            <a-button type="primary" @click="addUserClick" size="small">
+              <template #icon>
+                <icon-plus />
+              </template>
+              添加
+            </a-button>
+
+            <a-popconfirm
+              content="你确定要这些记录吗？?"
+              okText="确定删除"
+              cancelText="取消"
+              @ok="batchDelete"
+              type="error"
+              position="right"
+            >
+              <a-button type="primary" status="danger" size="small">
+                <template #icon>
+                  <icon-minus-circle />
+                </template>
+                批量删除
+              </a-button></a-popconfirm
+            >
+          </a-space>
+        </a-col>
+        <a-col :span="8" style="text-align: right">
+          <a-button>
+            <template #icon>
+              <icon-export />
+            </template>
+            导出
+          </a-button>
+        </a-col>
+      </a-row>
       <a-table
-        :stripe="true"
+        :bordered="false"
         row-key="userId"
         :columns="columns"
         :data="data"
         :row-selection="rowSelection"
         v-model:selectedKeys="selectedKeys"
         :pagination="pagination"
+        table-layout-fixed="true"
+        
       >
         <template #opt="{ record }">
           <a-space>
@@ -97,14 +130,9 @@
           </a-space>
         </template>
       </a-table>
-    </a-space>
+    </a-card>
 
-    <a-modal
-      v-model:visible="visible"
-      title="编辑信息"
-      @cancel="handleCancel"
-      @ok="handleBeforeOk"
-    >
+    <a-modal v-model:visible="visible" title="编辑信息" @cancel="handleCancel" @ok="handleBeforeOk">
       <a-form :model="form">
         <a-form-item field="name" label="姓名"> <a-input v-model="form.name" /> </a-form-item
         ><a-form-item field="identity" label="客户证号">
@@ -112,10 +140,8 @@
         ><a-form-item field="city" label="地址"> <a-input v-model="form.city" /> </a-form-item
         ><a-form-item field="phoneNumber" label="手机号">
           <a-input v-model="form.phoneNumber" /> </a-form-item
-        ><a-form-item field="sex" label="性别"> <a-input v-model="form.sex" /> </a-form-item
-        >
-        
-        
+        ><a-form-item field="sex" label="性别"> <a-input v-model="form.sex" /> </a-form-item>
+
         <a-form-item field="password" label="密码">
           <a-input v-model="form.password" type="password" />
         </a-form-item>
@@ -151,7 +177,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import {
-  IconPlusCircle,
+  IconPlus,
   IconMinusCircle,
   IconSearch,
   IconExport,
@@ -159,7 +185,7 @@ import {
 } from '@arco-design/web-vue/es/icon'
 import { Api } from '../Api'
 import { Message } from '@arco-design/web-vue'
-
+import Breadcrumb from '../components/breadcrumb/index.vue'
 const searchForm = ref({
   name: '',
   identity: '',
@@ -176,7 +202,7 @@ const rowSelection = ref({
   onlyCurrent: false
 })
 
-const pagination = { pageSize: 7 }
+const pagination = { pageSize: 4 }
 
 const columns = [
   {
@@ -202,7 +228,8 @@ const columns = [
   {
     title: '性别',
     dataIndex: 'sex'
-  }, {
+  },
+  {
     title: '注册时间',
     dataIndex: 'createDate'
   },
@@ -346,3 +373,15 @@ onMounted(() => {
   getAllUsers()
 })
 </script>
+<style scoped lang="less">
+
+
+
+:deep(.arco-table-th) {
+  &:last-child {
+    .arco-table-th-item-title {
+      margin-left: 16px;
+    }
+  }
+}
+</style>

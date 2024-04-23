@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import store from '@/store/index'
+// import store from '@/store/index'
 import { getToken } from '../utils/auth'
 
 import HomeView from '../views/HomeView.vue'
 import BookingView from '../views/BookingView.vue'
 import LoginView from '../views/LoginView.vue'
 
-import ManagerInform from '../components/ManagerInform.vue'
-import PostCar from '../components/PostCar.vue'
-import ManageCars from '../components/ManageCars.vue'
+// import ManagerInform from '../components/ManagerInform.vue'
+// import PostCar from '../components/PostCar.vue'
+// import ManageCars from '../components/ManageCars.vue'
 import RegisterView from '../views/RegisterView.vue'
 import UserAccountView from '../views/UserAccountView.vue'
 import ManagerView from '../views/ManagerView.vue'
@@ -18,16 +18,22 @@ import BookingConfirmation from '../components/BookingConfirmation.vue'
 import LogIn from '../components/LogIn.vue'
 import DatePicker from '../components/DatePicker.vue'
 import ConfirmData from '../components/ConfirmData.vue'
-import ManagerCarsTest from '../components/cars/ManagerCarsTest.vue'
 
 import ShowCarsView from '../views/ShowCarsView.vue'
 import UserSettingComponent from '../components/UserSettingComponent.vue'
 import UserBookingsComponent from '../components/UserBookingsComponent.vue'
+import CarsManageComponent from '../components/CarsManageComponent.vue'
+import BookingManageComponent from '../components/BookingManageComponent.vue'
+import CheckManageComponent from '../components/CheckManageComponent.vue'
+import CarInBoundComponent from '../components/CarInBoundComponent.vue'
+
+import { useConfirmStore } from '../store'
+
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-  
     {
       path: '/',
       name: 'home',
@@ -38,6 +44,7 @@ const router = createRouter({
 
       component: ShowCarsView
     },
+   
     {
       // Modify when finishing up booking process
       path: '/booking',
@@ -62,7 +69,8 @@ const router = createRouter({
             BookingWizard: DatePicker
           },
           beforeEnter: (to, from, next) => {
-            if (!store.state.bookingData.car) {
+            const store=useConfirmStore()
+            if (!store.bookingData.car) {
               next('/#fleet')
             } else {
               next()
@@ -75,9 +83,10 @@ const router = createRouter({
             BookingWizard: ConfirmData
           },
           beforeEnter: (to, from, next) => {
-            if (!store.state.bookingData.car) {
+            const store = useConfirmStore()
+            if (!store.bookingData.car) {
               next('/#fleet')
-            } else if (!store.state.bookingData.bookingDates) {
+            } else if (!store.bookingData.bookingDates) {
               next('date')
             } else {
               next()
@@ -90,11 +99,12 @@ const router = createRouter({
             BookingWizard: BookingConfirmation
           },
           beforeEnter: (to, from, next) => {
-            if (!store.state.bookingData.car) {
+            const store = useConfirmStore()
+            if (!store.bookingData.car) {
               next('/#fleet')
-            } else if (!store.state.bookingData.bookingDates) {
+            } else if (!store.bookingData.bookingDates) {
               next('date')
-            } else if (!store.state.finalBooking) {
+            } else if (!store.finalBooking) {
               next('confirm-data')
             } else {
               next()
@@ -139,12 +149,24 @@ const router = createRouter({
 
       children: [
         {
-          path: '/UsersManage',
+          path: '/manager/UsersManage',
           component: CustomersComponent
         },
         {
-          path: '/CarsManage',
-          component: ManagerCarsTest
+          path: '/manager/CarsManage',
+          component: CarsManageComponent
+        },
+        {
+          path: '/manager/BookingManage',
+          component: BookingManageComponent
+        },
+        {
+          path: '/manager/CheckManage',
+          component: CheckManageComponent
+        },
+        {
+          path: '/manager/CarInBoundManage',
+          component: CarInBoundComponent
         }
       ],
       meta: {
@@ -152,30 +174,30 @@ const router = createRouter({
       }
     },
 
-    {
-      path: '/manager/inform',
-      name: 'managerInform',
-      component: ManagerInform,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/manager/post',
-      name: 'postCar',
-      component: PostCar,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/manager/manage',
-      name: 'manageCars',
-      component: ManageCars,
-      meta: {
-        requiresAuth: true
-      }
-    }
+    // {
+    //   path: '/manager/inform',
+    //   name: 'managerInform',
+    //   component: ManagerInform,
+    //   meta: {
+    //     requiresAuth: true
+    //   }
+    // },
+    // {
+    //   path: '/manager/post',
+    //   name: 'postCar',
+    //   component: PostCar,
+    //   meta: {
+    //     requiresAuth: true
+    //   }
+    // },
+    // {
+    //   path: '/manager/manage',
+    //   name: 'manageCars',
+    //   component: ManageCars,
+    //   meta: {
+    //     requiresAuth: true
+    //   }
+    // }
   ]
 })
 
@@ -183,25 +205,20 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     // Check if the user is authenticated
     const token = getToken()
-    console.log("from :")  
-    console.log(from)
-    console.log("to :")
-    console.log(to)
+
     if (token == null || token == undefined || token == '') {
-       next('/login') // Redirect to the login page if not authenticated
-    }
+      //  next('/login') // Redirect to the login page if not authenticated
 
-    else if (to.fullPath == '/useraccount') {
-       next('/UserBookings')
-    }else if (to.fullPath == '/manager') {
-       next('/UsersManage')
-    }else{
-
-        next()
+      next()
+    } else if (to.fullPath == '/useraccount') {
+      next('/UserBookings')
+    } else if (to.fullPath == '/manager') {
+      next('/UsersManage')
+    } else {
+      next()
     }
 
     // Continue to the protected route
-   
   } else {
     next() // Allow access to public routes
   }

@@ -34,9 +34,12 @@
 import { decodeToken, getToken } from '../utils/auth'
 import { Api } from '@/Api'
 import { onMounted, ref } from 'vue'
-import store from '../store/index'
+// import store from '../store/index'
+ import {useConfirmStore} from '../store/index'
 import router from '../router/index'
 
+
+const store=useConfirmStore()
 const token = getToken()
 const userEmail = token ? decodeToken(token).userEmail : 'logged_out'
 
@@ -64,9 +67,9 @@ onMounted(() => {
     })
 
   bookingInfo.value = {
-    car: store.state.bookingData.car,
-    startDate: store.state.bookingData.bookingDates.startDate,
-    endDate: store.state.bookingData.bookingDates.endDate
+    car: store.bookingData.car,
+    startDate: store.bookingData.bookingDates.startDate,
+    endDate: store.bookingData.bookingDates.endDate
   }
 
   Api.get(`/cars/${bookingInfo.value.car}`)
@@ -84,21 +87,22 @@ onMounted(() => {
 const nextStep = async () => {
   // First save the booking with 'unpaid' status
   const bookingData = {
-    userEmail: store.state.userInfo.email,
-    startDate: store.state.bookingData.bookingDates.startDate,
-    endDate: store.state.bookingData.bookingDates.endDate,
-    status: '待审核',
+    userEmail: store.userInfo.email,
+    startDate: store.bookingData.bookingDates.startDate,
+    endDate: store.bookingData.bookingDates.endDate,
+    status: '审核中',
     content: '预订已保存，等待审核',
-    carRegistration: store.state.bookingData.car
+    carRegistration: store.bookingData.car
   }
 
   try {
     // Make a POST request to create a booking
     const response = await Api.post(`/users/${userEmail}/bookings`, bookingData)
-    store.commit('setFinalBooking', response.data)
 
-    console.log(store.state.bookingData.bookingDates)
-    console.log(store.state.finalBooking)
+    // store.commit('setFinalBooking', response.data)
+    store.finalBooking=response.data
+    console.log(store.bookingData.bookingDates)
+    console.log(store.finalBooking)
 
     router.push('/booking/confirmation')
   } catch (error) {

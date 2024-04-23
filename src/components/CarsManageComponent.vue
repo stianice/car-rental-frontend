@@ -1,74 +1,102 @@
 <template>
-  <a-typography-title :heading="4">查询条件：</a-typography-title>
-  <div>
-    <a-form :model="searchForm">
-      <a-row :gutter="18">
-        <a-col :span="6">
-          <a-form-item field="registration" label="车牌" label-col-flex="100px">
-            <a-input v-model="searchForm.registration" placeholder=" " />
-          </a-form-item>
-        </a-col>
-        <a-col :span="6">
-          <a-form-item field="brand" label="品牌" label-col-flex="80px">
-            <a-input v-model="searchForm.brand" placeholder=" " />
-          </a-form-item> </a-col
-        ><a-col :span="6">
-          <a-form-item field="color" label="颜色" label-col-flex="80px">
-            <a-input v-model="searchForm.color" placeholder=" " />
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row :gutter="18">
-        <a-col :span="6">
-          <a-form-item field="description" label="车辆描述" label-col-flex="100px">
-            <a-input v-model="searchForm.description" placeholder=" " />
-          </a-form-item>
-        </a-col>
+  <div class="container">
+    <Breadcrumb :items="['基础管理', '车辆管理']" />
 
-        <a-col :span="6">
-          <a-form-item field="carType" label="车辆类型" label-col-flex="80px">
-            <a-input v-model="searchForm.carType" placeholder=" " />
-          </a-form-item>
-        </a-col>
-        <a-col :span="4">
-          <a-radio-group dirction="horizon" style="margin-top: 8px" v-model="searchForm.status">
-            <a-radio value="已出租">已出租</a-radio>
-            <a-radio value="未出租">未出租</a-radio>
-          </a-radio-group>
-        </a-col>
-        <a-col :span="6" style="margin: 6px 40px">
-          <a-space>
-            <a-button type="primary" style="margin-right: 5px" @click="handleSearch"
-              ><icon-search />查询</a-button
-            >
+    <a-card class="general-card" title="查询条件">
+      <a-row>
+        <a-col :flex="1">
+          <a-form :model="searchForm">
+            <a-row :gutter="16">
+              <a-col :span="8">
+                <a-form-item field="registration" label="车牌">
+                  <a-input v-model="searchForm.registration" placeholder=" " />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="brand" label="品牌">
+                  <a-input v-model="searchForm.brand" placeholder=" " />
+                </a-form-item> </a-col
+              ><a-col :span="8">
+                <a-form-item field="color" label="颜色">
+                  <a-input v-model="searchForm.color" placeholder=" " />
+                </a-form-item>
+              </a-col>
 
-            <a-button type="primary" status="success" @click="handleResetSerchForm"
-              ><icon-refresh />重置</a-button
+              <a-col :span="8">
+                <a-form-item field="description" label="车辆描述">
+                  <a-input v-model="searchForm.description" placeholder=" " />
+                </a-form-item>
+              </a-col>
+
+              <a-col :span="8">
+                <a-form-item field="carType" label="车辆类型">
+                  <a-input v-model="searchForm.carType" placeholder=" " />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="status" label="车辆状态">
+                  <a-radio-group v-model="searchForm.status">
+                    <a-radio value="已出租">已出租</a-radio>
+                    <a-radio value="未出租">未出租</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+              </a-col>
+            </a-row>
+          </a-form>
+        </a-col>
+        <a-divider style="height: 84px" direction="vertical" />
+
+        <!-- 查询 重置键位 -->
+        <a-col :flex="'86px'" style="text-align: right">
+          <a-space direction="vertical" :size="18">
+            <a-button type="primary" @click="handleSearch">
+              <template #icon>
+                <icon-search />
+              </template>
+              查询
+            </a-button>
+
+            <a-button @click="handleResetSerchForm"
+              ><template #icon><icon-refresh /></template>重置</a-button
             >
           </a-space>
         </a-col>
       </a-row>
-    </a-form>
-    <div style="margin-bottom: 5px">
-      <a-button type="primary" status="success" size="mini" shape="round" @click="addCarClick"
-        ><icon-plus-circle />添加</a-button
-      >
 
-      <a-popconfirm
-        content="你确定要这些记录吗？?"
-        okText="确定删除"
-        cancelText="取消"
-        @ok="batchDelete"
-        type="error"
-        position="right"
-      >
-        <a-button type="primary" status="danger" size="mini" shape="round"
-          ><icon-minus-circle />批量删除</a-button
-        >
-      </a-popconfirm>
-    </div>
+      <a-divider style="margin-top: 0" />
 
-    <a-space direction="vertical" fill>
+      <a-row style="margin-bottom: 10px">
+        <a-space direction="vertical" :size="18">
+          <a-col :span="16">
+            <a-space>
+              <a-button type="primary" @click="addCarClick" size="small">
+                <template #icon>
+                  <icon-plus />
+                </template>
+                添加
+              </a-button>
+
+              <a-popconfirm
+                content="你确定要这些记录吗？?"
+                okText="确定删除"
+                cancelText="取消"
+                @ok="batchDelete"
+                type="error"
+                position="right"
+              >
+                <a-button type="primary" status="danger" size="small">
+                  <template #icon>
+                    <icon-minus-circle />
+                  </template>
+                  批量删除
+                </a-button></a-popconfirm
+              >
+            </a-space>
+          </a-col>
+          <a-col :span="8" style="text-align: right"> </a-col>
+        </a-space>
+      </a-row>
+
       <a-table
         :stripe="true"
         row-key="carId"
@@ -102,7 +130,7 @@
           </a-space>
         </template>
       </a-table>
-    </a-space>
+    </a-card>
 
     <a-modal v-model:visible="visible" title="编辑信息" @cancel="handleCancel" @ok="handleBeforeOk">
       <a-form :model="form">
@@ -185,6 +213,76 @@
       </a-form>
     </a-modal>
   </div>
+
+  <!-- <a-typography-title :heading="4">查询条件：</a-typography-title> -->
+  <!-- <div>
+    <a-form :model="searchForm">
+      <a-row :gutter="18">
+        <a-col :span="6">
+          <a-form-item field="registration" label="车牌" label-col-flex="100px">
+            <a-input v-model="searchForm.registration" placeholder=" " />
+          </a-form-item>
+        </a-col>
+        <a-col :span="6">
+          <a-form-item field="brand" label="品牌" label-col-flex="80px">
+            <a-input v-model="searchForm.brand" placeholder=" " />
+          </a-form-item> </a-col
+        ><a-col :span="6">
+          <a-form-item field="color" label="颜色" label-col-flex="80px">
+            <a-input v-model="searchForm.color" placeholder=" " />
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row :gutter="18">
+        <a-col :span="6">
+          <a-form-item field="description" label="车辆描述" label-col-flex="100px">
+            <a-input v-model="searchForm.description" placeholder=" " />
+          </a-form-item>
+        </a-col>
+
+        <a-col :span="6">
+          <a-form-item field="carType" label="车辆类型" label-col-flex="80px">
+            <a-input v-model="searchForm.carType" placeholder=" " />
+          </a-form-item>
+        </a-col>
+        <a-col :span="4">
+          <a-radio-group dirction="horizon" style="margin-top: 8px" v-model="searchForm.status">
+            <a-radio value="已出租">已出租</a-radio>
+            <a-radio value="未出租">未出租</a-radio>
+          </a-radio-group>
+        </a-col>
+        <a-col :span="6" style="margin: 6px 40px">
+          <a-space>
+            <a-button type="primary" style="margin-right: 5px" @click="handleSearch"
+              ><icon-search />查询</a-button
+            >
+
+            <a-button type="primary" status="success" @click="handleResetSerchForm"
+              ><icon-refresh />重置</a-button
+            >
+          </a-space>
+        </a-col>
+      </a-row>
+    </a-form>
+    <div style="margin-bottom: 5px">
+      <a-button type="primary" status="success" size="mini" shape="round" @click="addCarClick"
+        ><icon-plus-circle />添加</a-button
+      >
+
+      <a-popconfirm
+        content="你确定要这些记录吗？?"
+        okText="确定删除"
+        cancelText="取消"
+        @ok="batchDelete"
+        type="error"
+        position="right"
+      >
+        <a-button type="primary" status="danger" size="mini" shape="round"
+          ><icon-minus-circle />批量删除</a-button
+        >
+      </a-popconfirm>
+    </div>
+  </div> -->
 </template>
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
@@ -194,7 +292,7 @@ import {
   IconSearch,
   IconRefresh
 } from '@arco-design/web-vue/es/icon'
-import { Api } from '../../Api'
+import { Api } from '../Api'
 import { Message } from '@arco-design/web-vue'
 import axios from 'axios'
 
@@ -407,6 +505,7 @@ const handleClick = (record) => {
   form.value.image = record.image
   form.value.description = record.description
   form.value.carType = record.carType
+  form.value.oldRegistration = record.registration
 }
 
 const deleteItem = ref({ userId: '', email: '' })
@@ -414,7 +513,7 @@ const deleteItem = ref({ userId: '', email: '' })
 const handleBeforeOk = () => {
   console.log(form.value)
   //编辑信息提交
-  Api.put('/cars/' + form.value.registration, form.value).then((res) => {
+  Api.put('/cars/' + form.value.oldRegistration, form.value).then((res) => {
     visible.value = false
     getAllCars()
     Message.success('数据编辑成功')
