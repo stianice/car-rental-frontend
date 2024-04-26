@@ -15,6 +15,7 @@
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.1",
     "bootstrap-vue-next": "^0.14.8",
+    "echarts": "^5.5.0",
     "less": "^4.2.0",
     "pinia": "^2.1.7",
     "scss": "^0.2.4",

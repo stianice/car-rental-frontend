@@ -8,14 +8,18 @@
     <a-divider />
 
     <a-space direction="vertical" style="margin: 50px 50px" fill>
-      <a-table :stripe="true" row-key="bookingId" :columns="columns" :data="data" :pagination="7">
+      <a-table :stripe="true" row-key="bookingId" :columns="columns" :data="data" :pagination="{pieceSize: 7}">
         <template #img="{ record }">
           <a-image :src="record.image" width="100" hight="60" />
         </template>
 
         <template #sts="{ record }">
-          <span style="color: red" v-if="record.status == '审核中'">审核中</span>
-          <span style="color: blue" v-else>审核通过</span>
+          <span v-if="record.status == 2"><a-tag color="red">
+            审核中
+          </a-tag></span> <span v-else-if="record.status == 0"><a-tag color="green">审核通过,租赁成功</a-tag></span>
+          
+          <span v-else-if="record.status == 1"><a-tag color="blue">已归还，订单完成</a-tag></span>
+      
         </template>
 
         <template #opt="{ record }">
@@ -26,16 +30,22 @@
 
     <a-modal width="auto" v-model:visible="visible" title="订单详情">
       <a-space direction="vertical" align="start" fill>
-        <a-descriptions layout="inline-horizontal" title="我的订单" :size="large" :column="1">
-          <descriptions-item label="订单编号"> {{ bookingInfo.bookingReference }}</descriptions-item
-          ><descriptions-item label="车辆品牌">{{ bookingInfo.brand }} </descriptions-item
-          ><descriptions-item label="车辆颜色">{{ bookingInfo.color }} </descriptions-item
-          ><descriptions-item label="车辆类型"> {{ bookingInfo.carType }}</descriptions-item
-          ><descriptions-item label="订单状态"> {{ bookingInfo.status }}</descriptions-item>
-          ><descriptions-item label="订单金额"> {{ bookingInfo.price }}</descriptions-item>
-          ><descriptions-item label="起租时间"> {{ bookingInfo.startDate }}</descriptions-item>
-          ><descriptions-item label="归还时间"> {{ bookingInfo.endDate }}</descriptions-item>
-          ><descriptions-item label="订单创建时间"> {{ bookingInfo.createDate }}</descriptions-item>
+        <a-descriptions layout="inline-horizontal" title="我的订单" size="large" :column="1">
+          <a-descriptions-item label="订单编号"> {{ bookingInfo.bookingReference }}</a-descriptions-item
+          ><a-descriptions-item label="车辆品牌">{{ bookingInfo.brand }} </a-descriptions-item
+          ><a-descriptions-item label="车辆颜色">{{ bookingInfo.color }} </a-descriptions-item
+          ><a-descriptions-item label="车辆类型"> {{ bookingInfo.carType }}</a-descriptions-item
+          ><a-descriptions-item label="订单状态"><span v-if="bookingInfo.status == 2"><a-tag color="red">
+            审核中
+          </a-tag></span> <span v-else-if="bookingInfo.status == 0"><a-tag color="green">审核通过,租赁成功</a-tag></span>
+          
+          <span v-else-if="bookingInfo.status == 1"><a-tag color="blue">已归还，订单完成</a-tag></span>
+      
+        </a-descriptions-item>
+          <a-descriptions-item label="订单金额"> {{ bookingInfo.price }}</a-descriptions-item>
+          <a-descriptions-item label="起租时间"> {{ bookingInfo.startDate }}</a-descriptions-item>
+          <a-descriptions-item label="归还时间"> {{ bookingInfo.endDate }}</a-descriptions-item>
+          <a-descriptions-item label="订单创建时间"> {{ bookingInfo.createDate }}</a-descriptions-item>
         </a-descriptions>
         <a-image :src="bookingInfo.image" width="500" hight="60"> </a-image>
       </a-space>
@@ -48,7 +58,7 @@ import { ref, onMounted } from 'vue'
 import { Api } from '../Api'
 import { getUser } from '../utils/auth'
 import { Message } from '@arco-design/web-vue'
-const selectedKeys = ref([])
+
 const data = ref([])
 const visible = ref(false)
 

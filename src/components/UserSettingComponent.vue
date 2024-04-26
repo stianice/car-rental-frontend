@@ -13,13 +13,13 @@
       :column="1"
       style="font-size: 20px"
     >
-      <descriptions-item label="姓名"> {{ user.name }}</descriptions-item
-      ><descriptions-item label="电子邮箱">{{ user.email }} </descriptions-item
-      ><descriptions-item label="手机"> {{ user.phoneNumber }}</descriptions-item
-      ><descriptions-item label="性别">{{ user.sex }} </descriptions-item
-      ><descriptions-item label="身份证号"> {{ user.identity }}</descriptions-item
-      ><descriptions-item label="城市"> {{ user.city }}</descriptions-item
-      ><descriptions-item label="注册时间"> {{ user.createDate }}</descriptions-item>
+      <a-descriptions-item label="姓名"> {{ user.name }}</a-descriptions-item
+      ><a-descriptions-item label="电子邮箱">{{ user.email }} </a-descriptions-item
+      ><a-descriptions-item label="手机"> {{ user.phoneNumber }}</a-descriptions-item
+      ><a-descriptions-item label="性别">{{ user.sex }} </a-descriptions-item
+      ><a-descriptions-item label="身份证号"> {{ user.identity }}</a-descriptions-item
+      ><a-descriptions-item label="城市"> {{ user.city }}</a-descriptions-item
+      ><a-descriptions-item label="注册时间"> {{ user.createDate }}</a-descriptions-item>
     </a-descriptions>
 
     <a-space>

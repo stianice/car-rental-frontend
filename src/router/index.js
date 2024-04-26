@@ -1,14 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// import store from '@/store/index'
+
 import { getToken } from '../utils/auth'
 
 import HomeView from '../views/HomeView.vue'
 import BookingView from '../views/BookingView.vue'
 import LoginView from '../views/LoginView.vue'
 
-// import ManagerInform from '../components/ManagerInform.vue'
-// import PostCar from '../components/PostCar.vue'
-// import ManageCars from '../components/ManageCars.vue'
+
 import RegisterView from '../views/RegisterView.vue'
 import UserAccountView from '../views/UserAccountView.vue'
 import ManagerView from '../views/ManagerView.vue'
@@ -28,6 +26,12 @@ import CheckManageComponent from '../components/CheckManageComponent.vue'
 import CarInBoundComponent from '../components/CarInBoundComponent.vue'
 
 import { useConfirmStore } from '../store'
+import MenusManageComponent from '../components/MenusManageComponent.vue'
+import RoleManagerComponent from '../components/RoleManagerComponent.vue'
+import ManagerManageComponent from '../components/ManagerManageComponent.vue'
+import CustomerCityGraphManage from '../components/CustomerCityGraphManage.vue'
+import CompanyStat from '../components/CompanyStat.vue'
+import CustomerCitySexStat from '../components/CustomerCitySexStat.vue'
 
 
 
@@ -167,6 +171,30 @@ const router = createRouter({
         {
           path: '/manager/CarInBoundManage',
           component: CarInBoundComponent
+        },
+        {
+          path: '/manager/MenusManage',
+          component: MenusManageComponent
+        },
+        {
+          path: '/manager/RolesManage',
+          component: RoleManagerComponent
+        },
+        {
+          path: '/manager/ManagersManage',
+          component: ManagerManageComponent
+        },
+        {
+          path: '/manager/CustomerCityGraphManage',
+          component: CustomerCityGraphManage
+        },
+        {
+          path: '/manager/CompanyStat',
+          component: CompanyStat
+        },
+        {
+          path: '/manager/CustomerCitySexStat',
+          component: CustomerCitySexStat
         }
       ],
       meta: {
@@ -174,30 +202,6 @@ const router = createRouter({
       }
     },
 
-    // {
-    //   path: '/manager/inform',
-    //   name: 'managerInform',
-    //   component: ManagerInform,
-    //   meta: {
-    //     requiresAuth: true
-    //   }
-    // },
-    // {
-    //   path: '/manager/post',
-    //   name: 'postCar',
-    //   component: PostCar,
-    //   meta: {
-    //     requiresAuth: true
-    //   }
-    // },
-    // {
-    //   path: '/manager/manage',
-    //   name: 'manageCars',
-    //   component: ManageCars,
-    //   meta: {
-    //     requiresAuth: true
-    //   }
-    // }
   ]
 })
 
@@ -213,7 +217,7 @@ router.beforeEach((to, from, next) => {
     } else if (to.fullPath == '/useraccount') {
       next('/UserBookings')
     } else if (to.fullPath == '/manager') {
-      next('/UsersManage')
+      next('manager/UsersManage')
     } else {
       next()
     }

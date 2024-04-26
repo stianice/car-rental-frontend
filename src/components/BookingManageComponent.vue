@@ -3,66 +3,62 @@
     <Breadcrumb :items="['业务管理', '出租单管理']" />
     <a-card class="general-card" title="查询条件">
       <a-row>
-        
         <a-col :flex="1">
           <a-form :model="searchForm">
-      <a-row :gutter="16">
-        <a-col :span="8">
-          <a-form-item field="bookingReference" label="出租单号" label-col-flex="100px">
-            <a-input v-model="searchForm.registration" placeholder=" " />
-          </a-form-item>
-        </a-col>
-        <a-col :span="8">
-          <a-form-item field="identity" label="身份证号" label-col-flex="80px">
-            <a-input v-model="searchForm.identity" placeholder=" " />
-          </a-form-item> </a-col
-        ><a-col :span="8">
-          <a-form-item field="registration" label="车牌号" label-col-flex="80px">
-            <a-input v-model="searchForm.registration" placeholder=" " />
-          </a-form-item>
-        </a-col>
-   
-        <a-col :span="8">
-          <a-form-item field="startDate" label="开始时间" label-col-flex="100px">
-            <a-date-picker style="width: 200px" v-model:model-value="searchForm.startDate" />
-          </a-form-item>
-        </a-col>
+            <a-row :gutter="16">
+              <a-col :span="8">
+                <a-form-item field="bookingReference" label="出租单号" label-col-flex="100px">
+                  <a-input v-model="searchForm.registration" placeholder=" " />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="identity" label="身份证号" label-col-flex="80px">
+                  <a-input v-model="searchForm.identity" placeholder=" " />
+                </a-form-item> </a-col
+              ><a-col :span="8">
+                <a-form-item field="registration" label="车牌号" label-col-flex="80px">
+                  <a-input v-model="searchForm.registration" placeholder=" " />
+                </a-form-item>
+              </a-col>
 
-        <a-col :span="8">
-          <a-form-item field="endDate" label="归还时间" label-col-flex="80px">
-            <a-date-picker style="width: 200px" v-model:model-value="searchForm.endDate" />
-          </a-form-item>
-        </a-col>
-        <a-col :span="8">
-          <a-radio-group dirction="horizon" style="margin-top: 8px" v-model="searchForm.status">
-            <a-radio value="已归还">已归还</a-radio>
-            <a-radio value="未归还">未归还</a-radio>
-            <a-radio value="审核中">审核中</a-radio>
-          </a-radio-group>
-        </a-col>
-       
-      </a-row>
-    </a-form>
-        
+              <a-col :span="8">
+                <a-form-item field="startDate" label="开始时间" label-col-flex="100px">
+                  <a-date-picker style="width: 200px" v-model:model-value="searchForm.startDate" />
+                </a-form-item>
+              </a-col>
+
+              <a-col :span="8">
+                <a-form-item field="endDate" label="归还时间" label-col-flex="80px">
+                  <a-date-picker style="width: 200px" v-model:model-value="searchForm.endDate" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-radio-group
+                  dirction="horizon"
+                  style="margin-top: 8px"
+                  v-model="searchForm.status"
+                >
+                  <a-radio value="0">已归还</a-radio>
+                  <a-radio value="1">未归还</a-radio>
+                  <a-radio value="2">审核中</a-radio>
+                </a-radio-group>
+              </a-col>
+            </a-row>
+          </a-form>
         </a-col>
         <a-divider style="height: 84px" direction="vertical" />
         <a-col :span="8" :flex="'86px'" style="text-align: right">
           <a-space direction="vertical" :size="18">
-            <a-button type="primary" @click="handleSearch"
-              ><icon-search />查询</a-button
-            >
+            <a-button type="primary" @click="handleSearch"><icon-search />查询</a-button>
 
-            <a-button  status="success" @click="handleResetSerchForm"
-              ><icon-refresh />重置</a-button
-            >
+            <a-button status="success" @click="handleResetSerchForm"><icon-refresh />重置</a-button>
           </a-space>
         </a-col>
       </a-row>
 
       <a-divider style="margin-top: 0" />
 
-      <a-row style="margin-bottom: 10px"> 
-      
+      <a-row style="margin-bottom: 10px">
         <a-col :span="16">
           <a-space>
             <a-popconfirm
@@ -94,9 +90,9 @@
         :pagination="pagination"
       >
         <template #stu="{ record }">
-          <span style="color: blue" v-if="record.status == '已归还'">已归还</span>
-          <span style="color: red" v-else-if="record.status == '未归还'">未归还</span>
-          <span style="color: blue" v-else>审核中</span>
+         <span v-if="record.status==0"><a-tag color="red">未归还</a-tag></span>
+         <span v-else-if="record.status==1"><a-tag color="green">已归还</a-tag></span>
+         <span v-else><a-tag color="blue">审核中</a-tag></span>
         </template>
 
         <template #opt="{ record }">
@@ -126,197 +122,53 @@
           </a-space>
         </template>
       </a-table>
-      <a-modal v-model:visible="visible" title="编辑信息" @cancel="handleCancel" @ok="handleBeforeOk">
-      <a-form :model="form">
-        <a-form-item field="brand" label="出租单号">
-          <a-input v-model="form.bookingReference" />
-        </a-form-item>
-        <a-form-item field="registration" label="车牌号">
-          <a-input v-model="form.registration" /> </a-form-item
-        ><a-form-item field="identity" label="身份证号">
-          <a-input v-model="form.identity" /> </a-form-item
-        ><a-form-item field="startDate" label="起租时间">
-          <a-input v-model="form.startDate" /> </a-form-item
-        ><a-form-item field="endDate" label="归还时间">
-          <a-input v-model="form.endDate" /> </a-form-item
-        ><a-form-item field="price" label="订单金额"> <a-input v-model="form.price" /> </a-form-item
-        ><a-form-item field="status" label="状态">
-          <a-select
-            :style="{ width: '320px' }"
-            placeholder="Please select ..."
-            :model-value="form.status"
-          >
-            <a-option>审核中</a-option>
-            <a-option>已归还</a-option>
-            <a-option>未归还</a-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item field="content" label="备注">
-          <a-textarea
-            v-model:model-value="form.content"
-            :auto-size="{
-              minRows: 2,
-              maxRows: 5
-            }"
-          />
-        </a-form-item>
-      </a-form>
-    </a-modal>
+      <a-modal
+        v-model:visible="visible"
+        title="编辑信息"
+        @cancel="handleCancel"
+        @ok="handleBeforeOk"
+      >
+        <a-form :model="form">
+          <a-form-item field="brand" label="出租单号">
+            <a-input v-model="form.bookingReference" />
+          </a-form-item>
+          <a-form-item field="registration" label="车牌号">
+            <a-input v-model="form.registration" /> </a-form-item
+          ><a-form-item field="identity" label="身份证号">
+            <a-input v-model="form.identity" /> </a-form-item
+          ><a-form-item field="startDate" label="起租时间">
+            <a-input v-model="form.startDate" /> </a-form-item
+          ><a-form-item field="endDate" label="归还时间">
+            <a-input v-model="form.endDate" /> </a-form-item
+          ><a-form-item field="price" label="订单金额">
+            <a-input v-model="form.price" /> </a-form-item
+          ><a-form-item field="status" label="状态">
+            <a-select
+              :style="{ width: '320px' }"
+              placeholder="Please select ..."
+              :model-value="form.status"
+            >
+              <a-option value='2'>审核中</a-option>
+              <a-option value='1'>已归还</a-option>
+              <a-option value='0'>未归还</a-option>
+            </a-select>
+          </a-form-item>
+          <a-form-item field="content" label="备注">
+            <a-textarea
+              v-model:model-value="form.content"
+              :auto-size="{
+                minRows: 2,
+                maxRows: 5
+              }"
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
     </a-card>
   </div>
-
-  <!-- <a-typography-title :heading="4">查询条件：</a-typography-title>
-  <div>
-    <a-form :model="searchForm">
-      <a-row :gutter="18">
-        <a-col :span="6">
-          <a-form-item field="bookingReference" label="出租单号" label-col-flex="100px">
-            <a-input v-model="searchForm.registration" placeholder=" " />
-          </a-form-item>
-        </a-col>
-        <a-col :span="6">
-          <a-form-item field="identity" label="身份证号" label-col-flex="80px">
-            <a-input v-model="searchForm.identity" placeholder=" " />
-          </a-form-item> </a-col
-        ><a-col :span="6">
-          <a-form-item field="registration" label="车牌号" label-col-flex="80px">
-            <a-input v-model="searchForm.registration" placeholder=" " />
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row :gutter="18">
-        <a-col :span="6">
-          <a-form-item field="startDate" label="开始时间" label-col-flex="100px">
-            <a-date-picker style="width: 200px" v-model:model-value="searchForm.startDate" />
-          </a-form-item>
-        </a-col>
-
-        <a-col :span="6">
-          <a-form-item field="endDate" label="归还时间" label-col-flex="80px">
-            <a-date-picker style="width: 200px" v-model:model-value="searchForm.endDate" />
-          </a-form-item>
-        </a-col>
-        <a-col :span="4">
-          <a-radio-group dirction="horizon" style="margin-top: 8px" v-model="searchForm.status">
-            <a-radio value="已归还">已归还</a-radio>
-            <a-radio value="未归还">未归还</a-radio>
-            <a-radio value="审核中">审核中</a-radio>
-          </a-radio-group>
-        </a-col>
-        <a-col :span="6" style="margin: 6px 40px">
-          <a-space>
-            <a-button type="primary" style="margin-right: 5px" @click="handleSearch"
-              ><icon-search />查询</a-button
-            >
-
-            <a-button type="primary" status="success" @click="handleResetSerchForm"
-              ><icon-refresh />重置</a-button
-            >
-          </a-space>
-        </a-col>
-      </a-row>
-    </a-form>
-    <div style="margin-bottom: 5px">
-      <a-popconfirm
-        content="你确定要这些记录吗？?"
-        okText="确定删除"
-        cancelText="取消"
-        @ok="batchDelete"
-        type="error"
-        position="right"
-      >
-        <a-button type="primary" status="danger" size="mini" shape="round"
-          ><icon-minus-circle />批量删除</a-button
-        >
-      </a-popconfirm>
-    </div>
-
-    <a-space direction="vertical" fill>
-      <a-table
-        :stripe="true"
-        row-key="bookingId"
-        :columns="columns"
-        :data="data"
-        :row-selection="rowSelection"
-        v-model:selectedKeys="selectedKeys"
-        :pagination="pagination"
-      >
-        <template #stu="{ record }">
-          <span style="color: blue" v-if="record.status == '已归还'">已归还</span>
-          <span style="color: red" v-else-if="record.status == '未归还'">未归还</span>
-          <span style="color: blue" v-else>审核中</span>
-        </template>
-
-        <template #opt="{ record }">
-          <a-space>
-            <a-button type="primary" size="mini" @click="handleClick(record)">编辑</a-button>
-            <a-popconfirm
-              v-if="record.status == '审核中'"
-              content="确定通过审核吗?"
-              okText="确定"
-              cancelText="取消"
-              @ok="handleUpdateStatusOk(record)"
-              type="warning"
-              position="tr"
-            >
-              <a-button type="primary" size="mini" status="warning">确定出租</a-button>
-            </a-popconfirm>
-            <a-popconfirm
-              content="你确定要删除这条记录吗?"
-              okText="确定删除"
-              cancelText="取消"
-              @ok="handleDeleteOk(record)"
-              type="warning"
-              position="tr"
-            >
-              <a-button type="primary" size="mini" status="danger">删除</a-button>
-            </a-popconfirm>
-          </a-space>
-        </template>
-      </a-table>
-    </a-space>
-
-    <a-modal v-model:visible="visible" title="编辑信息" @cancel="handleCancel" @ok="handleBeforeOk">
-      <a-form :model="form">
-        <a-form-item field="brand" label="出租单号">
-          <a-input v-model="form.bookingReference" />
-        </a-form-item>
-        <a-form-item field="registration" label="车牌号">
-          <a-input v-model="form.registration" /> </a-form-item
-        ><a-form-item field="identity" label="身份证号">
-          <a-input v-model="form.identity" /> </a-form-item
-        ><a-form-item field="startDate" label="起租时间">
-          <a-input v-model="form.startDate" /> </a-form-item
-        ><a-form-item field="endDate" label="归还时间">
-          <a-input v-model="form.endDate" /> </a-form-item
-        ><a-form-item field="price" label="订单金额"> <a-input v-model="form.price" /> </a-form-item
-        ><a-form-item field="status" label="状态">
-          <a-select
-            :style="{ width: '320px' }"
-            placeholder="Please select ..."
-            :model-value="form.status"
-          >
-            <a-option>审核中</a-option>
-            <a-option>已归还</a-option>
-            <a-option>未归还</a-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item field="content" label="备注">
-          <a-textarea
-            v-model:model-value="form.content"
-            :auto-size="{
-              minRows: 2,
-              maxRows: 5
-            }"
-          />
-        </a-form-item>
-      </a-form>
-    </a-modal>
-  </div> -->
 </template>
 <script setup>
 import { onMounted, ref } from 'vue'
-import { IconMinusCircle, IconSearch, IconRefresh } from '@arco-design/web-vue/es/icon'
 import { Api } from '../Api'
 import { Message } from '@arco-design/web-vue'
 import Breadcrumb from '@/components/breadcrumb/index.vue'

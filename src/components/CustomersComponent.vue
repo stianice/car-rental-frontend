@@ -5,15 +5,11 @@
     <a-card class="general-card" title="查询条件">
       <a-row>
         <a-col :flex="1">
-          <a-form
-            :model="formModel"
-            :label-col-props="{ span: 6 }"
-            :wrapper-col-props="{ span: 18 }"
-            label-align="left"
+          <a-form :model="searchForm"  
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="name" label="客户姓名">
+                <a-form-item label="客户姓名">
                   <a-input v-model="searchForm.name" />
                 </a-form-item>
               </a-col>
@@ -23,22 +19,22 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="email" label="客户邮箱">
+                <a-form-item label="客户邮箱">
                   <a-input v-model="searchForm.email" />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="phoneNumber" label="客户手机">
+                <a-form-item label="客户手机">
                   <a-input v-model="searchForm.phoneNumber" />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="city" label="客户地址">
+                <a-form-item  label="客户地址">
                   <a-input v-model="searchForm.city" />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="sex" label="性别">
+                <a-form-item label="性别">
                   <a-radio-group dirction="horizon" v-model="searchForm.sex">
                     <a-radio value="男">男</a-radio>
                     <a-radio value="女">女</a-radio>
@@ -111,7 +107,7 @@
         :row-selection="rowSelection"
         v-model:selectedKeys="selectedKeys"
         :pagination="pagination"
-        table-layout-fixed="true"
+        :table-layout-fixed="true"
         
       >
         <template #opt="{ record }">

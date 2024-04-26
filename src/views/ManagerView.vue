@@ -5,7 +5,7 @@
         theme="dark"
         breakpoint="xl"
         :style="{ paddingTop: '60px' }"
-        hide-trigger="true"
+        :hide-trigger="true"
         :collapsible="true"
         :width="menuWidth"
         :collapsed="collapse"

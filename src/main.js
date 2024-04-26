@@ -13,7 +13,7 @@ import ArcoVue from '@arco-design/web-vue'
 import { createPinia } from 'pinia'
 import '@arco-design/web-vue/dist/arco.css'
 import '@/assets/style/global.less'
-
+import ArcoVueIcon from '@arco-design/web-vue/es/icon';
 const app = createApp(App)
 const pinia = createPinia()
 
@@ -21,5 +21,6 @@ app.use(pinia)
 app.use(router)
 app.use(BootstrapVueNext)
 app.use(ArcoVue)
+app.use(ArcoVueIcon)
 
 app.mount('#app')

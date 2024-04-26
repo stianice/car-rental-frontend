@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Breadcrumb :items="['业务管理', '检查单管理']" />
-    <a-card class="general-card" title="查询条件">
+    <a-card class="general-card" title="查询条件" >
       <a-row>
         <a-col :flex="1">
           <a-form :model="searchForm">
@@ -77,7 +77,7 @@
       </a-row>
 
       <a-table
-        :stripe="true"
+
         row-key="bookingId"
         :columns="columns"
         :data="data"

@@ -6,7 +6,7 @@
         <a-col :flex="1">
           <a-row :gutter="16">
             <a-col :span="12">
-              <a-form-item field="bookingReference" label="出租单号">
+              <a-form-item  label="出租单号">
                 <a-input
                   v-model="bookingReference"
                   placeholder="请输入出租单号进行入库"
@@ -28,9 +28,7 @@
       <a-divider style="margin-top: 0" />
       <a-row>
         <a-col :flex="1">
-          <!-- <a-row :gutter="16">
-            <a-col><a-typography-title :heading="6">检查单表单</a-typography-title></a-col> 
-          </a-row> -->
+        
           <a-row :gutter="16">
             <a-col :span="8">
               <a-form-item field="checkReference" label="检查单号">
@@ -66,7 +64,7 @@
 
           <a-row :gutter="16">
             <a-col :span="16">
-              <a-form-item field="CheckDesc" label="检查描述">
+              <a-form-item label="检查描述">
                 <a-textarea
                   v-model:model-value="form.CheckDesc"
                   :auto-size="{
@@ -94,54 +92,37 @@
         </a-col>
       </a-row>
 
-      <div style="display: flex; justify-content: space-between; ">
+      <div style="display: flex; justify-content: space-between">
         <a-card :style="{ width: '360px' }">
-          <a-descriptions
-            style="margin-top: 20px"
-            :data="data"
-            :size="small"
-            title="车辆信息"
-            :column="1"
-          >
-            <descriptions-item label="车牌号"> {{ car.registration }}</descriptions-item
-            ><descriptions-item label="车辆类型">{{ car.carType }} </descriptions-item
-            ><descriptions-item label="出租价格"> {{ car.price }}</descriptions-item
-            ><descriptions-item label="品牌">{{ car.brand }} </descriptions-item
-            ><descriptions-item label="车辆描述">{{ car.description }} </descriptions-item
-            ><descriptions-item label="车辆图片">
+          <a-descriptions style="margin-top: 20px" size="small" title="车辆信息" :column="1">
+            <a-descriptions-item label="车牌号"> {{ car.registration }}</a-descriptions-item
+            ><a-descriptions-item label="车辆类型">{{ car.carType }} </a-descriptions-item
+            ><a-descriptions-item label="出租价格"> {{ car.price }}</a-descriptions-item
+            ><a-descriptions-item label="品牌">{{ car.brand }} </a-descriptions-item
+            ><a-descriptions-item label="车辆描述">{{ car.description }} </a-descriptions-item
+            ><a-descriptions-item label="车辆图片">
               <a-image :src="car.image" width="100px"></a-image
-            ></descriptions-item>
+            ></a-descriptions-item>
           </a-descriptions>
         </a-card>
         <a-card :style="{ width: '360px' }">
-          <a-descriptions
-            style="margin-top: 20px"
-            :data="data"
-            :size="small"
-            title="用户信息"
-            :column="1"
-          >
-            <descriptions-item label="姓名"> {{ user.name }}</descriptions-item
-            ><descriptions-item label="电子邮箱">{{ user.email }} </descriptions-item
-            ><descriptions-item label="手机"> {{ user.phoneNumber }}</descriptions-item
-            ><descriptions-item label="性别">{{ user.sex }} </descriptions-item
-            ><descriptions-item label="身份证号"> {{ user.identity }}</descriptions-item
-            ><descriptions-item label="城市"> {{ user.city }}</descriptions-item>
+          <a-descriptions style="margin-top: 20px" size="small" title="用户信息" :column="1">
+            <a-descriptions-item label="姓名"> {{ user.name }}</a-descriptions-item
+            ><a-descriptions-item label="电子邮箱">{{ user.email }} </a-descriptions-item
+            ><a-descriptions-item label="手机"> {{ user.phoneNumber }}</a-descriptions-item
+            ><a-descriptions-item label="性别">{{ user.sex }} </a-descriptions-item
+            ><a-descriptions-item label="身份证号"> {{ user.identity }}</a-descriptions-item
+            ><a-descriptions-item label="城市"> {{ user.city }}</a-descriptions-item>
           </a-descriptions></a-card
         >
         <a-card :style="{ width: '360px' }">
-          <a-descriptions
-            style="margin-top: 20px"
-            :data="data"
-            :size="small"
-            title="订单信息"
-            :column="1"
-          >
-            <descriptions-item label="出租单号"> {{ booking.bookingReference }}</descriptions-item
-            ><descriptions-item label="订单金额">{{ booking.price }} </descriptions-item
-            ><descriptions-item label="起租时间"> {{ booking.startDate }}</descriptions-item
-            ><descriptions-item label="归还时间">{{ booking.endDate }} </descriptions-item
-            ><descriptions-item label="创建时间"> {{ booking.createDate }}</descriptions-item>
+          <a-descriptions style="margin-top: 20px" size="small" title="订单信息" :column="1">
+            <a-descriptions-item label="出租单号">
+              {{ booking.bookingReference }}</a-descriptions-item
+            ><a-descriptions-item label="订单金额">{{ booking.price }} </a-descriptions-item
+            ><a-descriptions-item label="起租时间"> {{ booking.startDate }}</a-descriptions-item
+            ><a-descriptions-item label="归还时间">{{ booking.endDate }} </a-descriptions-item
+            ><a-descriptions-item label="创建时间"> {{ booking.createDate }}</a-descriptions-item>
           </a-descriptions></a-card
         >
       </div>

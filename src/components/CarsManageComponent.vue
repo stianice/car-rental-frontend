@@ -36,8 +36,8 @@
               <a-col :span="8">
                 <a-form-item field="status" label="车辆状态">
                   <a-radio-group v-model="searchForm.status">
-                    <a-radio value="已出租">已出租</a-radio>
-                    <a-radio value="未出租">未出租</a-radio>
+                    <a-radio value="1">已出租</a-radio>
+                    <a-radio value="0">未出租</a-radio>
                   </a-radio-group>
                 </a-form-item>
               </a-col>
@@ -105,10 +105,11 @@
         :row-selection="rowSelection"
         v-model:selectedKeys="selectedKeys"
         :pagination="pagination"
+        :scroll="{ y: 260 }"
       >
         <template #stu="{ record }">
-          <span style="color: red" v-if="record.status == '未出租'">未出租</span>
-          <span style="color: blue" v-else>已出租</span>
+          <span v-if="record.status == '0'"> <a-tag color="red"> 未出租</a-tag> </span>
+          <span v-else><a-tag color="blue">已出租</a-tag></span>
         </template>
         <template #img="{ record }">
           <a-image width="100" hight="60" :src="record.image" />
@@ -141,7 +142,10 @@
         ><a-form-item field="carType" label="车型"> <a-input v-model="form.carType" /> </a-form-item
         ><a-form-item field="price" label="租赁价格"> <a-input v-model="form.price" /> </a-form-item
         ><a-form-item field="status" label="出租状态">
-          <a-input v-model="form.status" />
+          <a-radio-group v-model="form.status">
+                    <a-radio value="1">已出租</a-radio>
+                    <a-radio value="0">未出租</a-radio>
+                  </a-radio-group>
         </a-form-item>
 
         <a-form-item field="description" label="描述">
@@ -174,20 +178,23 @@
       @ok="handleAddCarBeforeOk"
     >
       <a-form :model="AddCarForm">
-        <a-form-item field="brand" label="品牌">
+        <a-form-item  label="品牌">
           <a-input v-model="AddCarForm.brand" />
         </a-form-item>
-        <a-form-item field="registration" label="车牌号">
+        <a-form-item  label="车牌号">
           <a-input v-model="AddCarForm.registration" /> </a-form-item
-        ><a-form-item field="color" label="颜色">
+        ><a-form-item label="颜色">
           <a-input v-model="AddCarForm.color" /> </a-form-item
-        ><a-form-item field="carType" label="车型">
+        ><a-form-item label="车型">
           <a-input v-model="AddCarForm.carType" /> </a-form-item
-        ><a-form-item field="price" label="出租价格">
+        ><a-form-item flabel="出租价格">
           <a-input v-model="AddCarForm.price" />
         </a-form-item>
-        <a-form-item field="status" label="出租状态">
-          <a-input v-model="AddCarForm.status" type="text" />
+        <a-form-item  label="出租状态">
+          <a-radio-group v-model="searchForm.status">
+                    <a-radio value="1">已出租</a-radio>
+                    <a-radio value="0">未出租</a-radio>
+                  </a-radio-group>
         </a-form-item>
 
         <a-form-item field="description" label="描述">
@@ -213,88 +220,14 @@
       </a-form>
     </a-modal>
   </div>
-
-  <!-- <a-typography-title :heading="4">查询条件：</a-typography-title> -->
-  <!-- <div>
-    <a-form :model="searchForm">
-      <a-row :gutter="18">
-        <a-col :span="6">
-          <a-form-item field="registration" label="车牌" label-col-flex="100px">
-            <a-input v-model="searchForm.registration" placeholder=" " />
-          </a-form-item>
-        </a-col>
-        <a-col :span="6">
-          <a-form-item field="brand" label="品牌" label-col-flex="80px">
-            <a-input v-model="searchForm.brand" placeholder=" " />
-          </a-form-item> </a-col
-        ><a-col :span="6">
-          <a-form-item field="color" label="颜色" label-col-flex="80px">
-            <a-input v-model="searchForm.color" placeholder=" " />
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row :gutter="18">
-        <a-col :span="6">
-          <a-form-item field="description" label="车辆描述" label-col-flex="100px">
-            <a-input v-model="searchForm.description" placeholder=" " />
-          </a-form-item>
-        </a-col>
-
-        <a-col :span="6">
-          <a-form-item field="carType" label="车辆类型" label-col-flex="80px">
-            <a-input v-model="searchForm.carType" placeholder=" " />
-          </a-form-item>
-        </a-col>
-        <a-col :span="4">
-          <a-radio-group dirction="horizon" style="margin-top: 8px" v-model="searchForm.status">
-            <a-radio value="已出租">已出租</a-radio>
-            <a-radio value="未出租">未出租</a-radio>
-          </a-radio-group>
-        </a-col>
-        <a-col :span="6" style="margin: 6px 40px">
-          <a-space>
-            <a-button type="primary" style="margin-right: 5px" @click="handleSearch"
-              ><icon-search />查询</a-button
-            >
-
-            <a-button type="primary" status="success" @click="handleResetSerchForm"
-              ><icon-refresh />重置</a-button
-            >
-          </a-space>
-        </a-col>
-      </a-row>
-    </a-form>
-    <div style="margin-bottom: 5px">
-      <a-button type="primary" status="success" size="mini" shape="round" @click="addCarClick"
-        ><icon-plus-circle />添加</a-button
-      >
-
-      <a-popconfirm
-        content="你确定要这些记录吗？?"
-        okText="确定删除"
-        cancelText="取消"
-        @ok="batchDelete"
-        type="error"
-        position="right"
-      >
-        <a-button type="primary" status="danger" size="mini" shape="round"
-          ><icon-minus-circle />批量删除</a-button
-        >
-      </a-popconfirm>
-    </div>
-  </div> -->
 </template>
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
-import {
-  IconPlusCircle,
-  IconMinusCircle,
-  IconSearch,
-  IconRefresh
-} from '@arco-design/web-vue/es/icon'
+
 import { Api } from '../Api'
 import { Message } from '@arco-design/web-vue'
 import axios from 'axios'
+import Breadcrumb from './breadcrumb/index.vue'
 
 const searchForm = ref({
   registration: '',

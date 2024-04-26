@@ -14,17 +14,16 @@ export const useConfirmStore = defineStore('confirm', {
 
 export const useAppStore = defineStore('appSettings', {
   state: () => ({
-    theme: "light",
+    theme: 'light',
     colorWeek: false,
     navbar: true,
     menu: true,
     menuCollapse: false,
     footer: true,
-    themeColor: "#165DFF",
+    themeColor: '#165DFF',
     menuWidth: 250,
     globalSettings: false
-  }
-  ),
+  }),
   actions: {
     // Update app settings
     updateSettings(partial) {
@@ -43,4 +42,15 @@ export const useAppStore = defineStore('appSettings', {
       }
     }
   }
+})
+
+export const useMenusStore = defineStore('MenusStore', {
+  state: () => {
+    menus: []
+  },
+  actions: {
+    updateMenus(menus) {
+      
+      this.$patch(menus)
+  }}
 })
