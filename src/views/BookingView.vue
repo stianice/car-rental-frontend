@@ -1,7 +1,7 @@
 <template>
     <NavBar />
     <div class='container'>
-        <router-view name="BookingWizard"></router-view>
+        <router-view name="BookingWizard" />
     </div>
 </template>
 
@@ -12,7 +12,7 @@
 </style>
 
 <script setup>
-    import NavBar from '@/components/NavBar.vue';
+    import NavBar from '@/components/navbar/CustomerNavBar.vue';
     import { RouterView } from 'vue-router'
 
    

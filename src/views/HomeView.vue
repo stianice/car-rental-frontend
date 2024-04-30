@@ -9,7 +9,7 @@
 <script setup>
 import HeroComponent from '../components/HeroComponent.vue'
 
-import NavBar from '../components/NavBar.vue'
+import NavBar from '../components/navbar/CustomerNavBar.vue'
 import AboutComponent from '../components/AboutComponent.vue'
 
 </script>

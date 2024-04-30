@@ -1,39 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
 import { getToken } from '../utils/auth'
-
-import HomeView from '../views/HomeView.vue'
-import BookingView from '../views/BookingView.vue'
-import LoginView from '../views/LoginView.vue'
-
-
-import RegisterView from '../views/RegisterView.vue'
-import UserAccountView from '../views/UserAccountView.vue'
-import ManagerView from '../views/ManagerView.vue'
-import CustomersComponent from '../components/CustomersComponent.vue'
-
-import BookingConfirmation from '../components/BookingConfirmation.vue'
-import LogIn from '../components/LogIn.vue'
-import DatePicker from '../components/DatePicker.vue'
-import ConfirmData from '../components/ConfirmData.vue'
-
-import ShowCarsView from '../views/ShowCarsView.vue'
-import UserSettingComponent from '../components/UserSettingComponent.vue'
-import UserBookingsComponent from '../components/UserBookingsComponent.vue'
-import CarsManageComponent from '../components/CarsManageComponent.vue'
-import BookingManageComponent from '../components/BookingManageComponent.vue'
-import CheckManageComponent from '../components/CheckManageComponent.vue'
-import CarInBoundComponent from '../components/CarInBoundComponent.vue'
-
 import { useConfirmStore } from '../store'
-import MenusManageComponent from '../components/MenusManageComponent.vue'
-import RoleManagerComponent from '../components/RoleManagerComponent.vue'
-import ManagerManageComponent from '../components/ManagerManageComponent.vue'
-import CustomerCityGraphManage from '../components/CustomerCityGraphManage.vue'
-import CompanyStat from '../components/CompanyStat.vue'
-import CustomerCitySexStat from '../components/CustomerCitySexStat.vue'
-
-
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,23 +8,23 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: () => import('../views/HomeView.vue'),
     },
     {
       path: '/showCars',
 
-      component: ShowCarsView
+      component: () => import('../views/ShowCarsView.vue'),
     },
-   
+
     {
       // Modify when finishing up booking process
       path: '/booking',
-      component: BookingView,
+      component: () => import('../views/BookingView.vue'),
       children: [
         {
           path: '',
           components: {
-            BookingWizard: LogIn
+            BookingWizard: () => import('../components/LogIn.vue'),
           },
           beforeEnter: (to, from, next) => {
             if (getToken()) {
@@ -65,26 +32,26 @@ const router = createRouter({
             } else {
               next()
             }
-          }
+          },
         },
         {
           path: 'date',
           components: {
-            BookingWizard: DatePicker
+            BookingWizard: () => import('../components/DatePicker.vue'),
           },
           beforeEnter: (to, from, next) => {
-            const store=useConfirmStore()
+            const store = useConfirmStore()
             if (!store.bookingData.car) {
               next('/#fleet')
             } else {
               next()
             }
-          }
+          },
         },
         {
           path: 'confirm-data',
           components: {
-            BookingWizard: ConfirmData
+            BookingWizard: () => import('../components/ConfirmData.vue'),
           },
           beforeEnter: (to, from, next) => {
             const store = useConfirmStore()
@@ -95,12 +62,13 @@ const router = createRouter({
             } else {
               next()
             }
-          }
+          },
         },
         {
           path: 'confirmation',
           components: {
-            BookingWizard: BookingConfirmation
+            BookingWizard: () =>
+              import('../components/BookingConfirmation.vue'),
           },
           beforeEnter: (to, from, next) => {
             const store = useConfirmStore()
@@ -113,96 +81,100 @@ const router = createRouter({
             } else {
               next()
             }
-          }
-        }
-      ]
+          },
+        },
+      ],
     },
     {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: () => import('../views/LoginView.vue'),
     },
     {
       path: '/register',
       name: 'Register',
-      component: RegisterView
+      component: () => import('../views/RegisterView.vue'),
     },
     {
       path: '/useraccount',
       name: 'UserAccount',
-      component: UserAccountView,
+      component: () => import('../layout/UserAccountLayout.vue'),
       children: [
         {
           path: '/UserSetting',
-          component: UserSettingComponent
+          component: () => import('../views/Customer/UserSettingComponent.vue'),
         },
         {
           path: '/UserBookings',
-          component: UserBookingsComponent
-        }
+          component: () =>
+            import('../views/Customer/UserBookingsComponent.vue'),
+        },
       ],
 
       meta: {
-        requiresAuth: true
-      }
+        requiresAuth: true,
+      },
     },
     {
       path: '/manager',
       name: 'manager',
-      component: ManagerView,
+      component: () => import('../layout/ManageAccountLayout.vue'),
 
       children: [
         {
           path: '/manager/UsersManage',
-          component: CustomersComponent
+          component: () => import('../views/Manager/CustomersManage.vue'),
         },
         {
           path: '/manager/CarsManage',
-          component: CarsManageComponent
+          component: () => import('../views/Manager/CarsManage.vue'),
         },
         {
           path: '/manager/BookingManage',
-          component: BookingManageComponent
+          component: () => import('../views/Manager/BookingManage.vue'),
         },
         {
           path: '/manager/CheckManage',
-          component: CheckManageComponent
+          component: () => import('../views/Manager/CheckManage.vue'),
         },
         {
           path: '/manager/CarInBoundManage',
-          component: CarInBoundComponent
+          component: () => import('../views/Manager/CarInBound.vue'),
         },
         {
           path: '/manager/MenusManage',
-          component: MenusManageComponent
+          component: () => import('../views/Manager/MenusManage.vue'),
         },
         {
           path: '/manager/RolesManage',
-          component: RoleManagerComponent
+          component: () => import('../views/Manager/RoleManager.vue'),
         },
         {
           path: '/manager/ManagersManage',
-          component: ManagerManageComponent
+          component: () => import('../views/Manager/ManagerManage.vue'),
         },
         {
           path: '/manager/CustomerCityGraphManage',
-          component: CustomerCityGraphManage
+          component: () => import('../views/Manager/CustomerCityStat.vue'),
         },
         {
           path: '/manager/CompanyStat',
-          component: CompanyStat
+          component: () => import('../views/Manager/CompanyStat.vue'),
         },
         {
           path: '/manager/CustomerCitySexStat',
-          component: CustomerCitySexStat
-        }
+          component: () => import('../views/Manager/CustomerCitySexStat.vue'),
+        },
+        {
+          path: '/manager/index',
+          component: () => import('@/views/Manager/SystemIndex.vue'),
+        },
       ],
       meta: {
-        requiresAuth: true
-      }
+        requiresAuth: true,
+      },
     },
-
-  ]
+  ],
 })
 
 router.beforeEach((to, from, next) => {

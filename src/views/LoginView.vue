@@ -13,7 +13,7 @@
 </style>
 
 <script setup>
-import NavBar from '@/components/NavBar.vue';
+import NavBar from '@/components/navbar/CustomerNavBar.vue';
 import LogIn from '@/components/LogIn.vue';
 
 

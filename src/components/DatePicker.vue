@@ -53,16 +53,16 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import {useConfirmStore} from '../store/index'
+import { useConfirmStore } from '../store/index'
 // import store from '../store/index'
-import router from '../router/index';
+import router from '../router/index'
 
 const bookingData = ref({
   startDate: '',
   endDate: ''
 })
-const store= useConfirmStore();
-onMounted ( () => {
+const store = useConfirmStore()
+onMounted(() => {
   const store = useConfirmStore()
   bookingData.value = store.bookingData.bookingDates
 })
@@ -71,7 +71,7 @@ const nextStep = () => {
   // submit booking dates to the vuex store
 
   // store.commit('setBookingDate', bookingData.value)
-  store.BookingDate=bookingData.value
+  store.BookingDate = bookingData.value
   router.push('/booking/confirm-data')
 }
 </script>

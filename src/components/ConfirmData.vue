@@ -35,11 +35,11 @@ import { decodeToken, getToken } from '../utils/auth'
 import { Api } from '@/Api'
 import { onMounted, ref } from 'vue'
 // import store from '../store/index'
- import {useConfirmStore} from '../store/index'
+import { useConfirmStore } from '../store/index'
 import router from '../router/index'
 
 
-const store=useConfirmStore()
+const store = useConfirmStore()
 const token = getToken()
 const userEmail = token ? decodeToken(token).userEmail : 'logged_out'
 
@@ -90,7 +90,7 @@ const nextStep = async () => {
     userEmail: store.userInfo.email,
     startDate: store.bookingData.bookingDates.startDate,
     endDate: store.bookingData.bookingDates.endDate,
-    status: '审核中',
+    status: '2',
     content: '预订已保存，等待审核',
     carRegistration: store.bookingData.car
   }
@@ -100,7 +100,7 @@ const nextStep = async () => {
     const response = await Api.post(`/users/${userEmail}/bookings`, bookingData)
 
     // store.commit('setFinalBooking', response.data)
-    store.finalBooking=response.data
+    store.finalBooking = response.data
     console.log(store.bookingData.bookingDates)
     console.log(store.finalBooking)
 
@@ -111,6 +111,10 @@ const nextStep = async () => {
     // this.$router.push('/');
   }
 }
+
+const prevStep=()=>{
+  router.push('/booking/date')
+}
 </script>
 
 <style scoped>
@@ -118,6 +122,7 @@ const nextStep = async () => {
   width: max-content;
   height: max-content;
 }
+
 *.row flex-lg-row-reverse align-items-center py-5 mb-2 {
   padding: 0%;
 }

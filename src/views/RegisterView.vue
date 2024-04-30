@@ -14,7 +14,7 @@
 
 <script setup>
 
-    import NavBar from '@/components/NavBar.vue';
+    import NavBar from '@/components/navbar/CustomerNavBar.vue';
     import Register from '@/components/Register.vue';
     
    

@@ -1,7 +1,7 @@
 <template>
       <NavBar />
     <main data-bs-spy="scroll" data-bs-target="#mainNav"></main>
-    <CaruoselComponent />
+    <CarouselComponent />
  <CarFleet />
 
 
@@ -9,7 +9,7 @@
 
 <script setup>
 
-import NavBar from '../components/NavBar.vue';
-import CaruoselComponent from '../components/CaruoselComponent.vue';
+import NavBar from '../components/navbar/CustomerNavBar.vue';
+import CarouselComponent from '../components/CarouselComponent.vue';
 import CarFleet from '../components/CarFleet.vue';
 </script>
